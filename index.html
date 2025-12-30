@@ -1,26 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Health Dashboard 3</title>
 </head>
 <body>
+
   <h1>Health Dashboard 3</h1>
 
-  <p id="status">PWA is running ✔️</p>
-  
+  <!-- Buttons -->
+  <button id="demoLogBtn">Add Demo Data</button>
   <button id="dailySummaryBtn">Show Daily Summary</button>
+
+  <!-- Output area -->
   <div id="dailySummaryOutput"></div>
 
-  <script src="app.js"></script>
+  <!-- App script -->
+  <script src="./app.js"></script>
+
+  <script>
+    // Demo data button
+    document.getElementById("demoLogBtn").addEventListener("click", () => {
+      // Example logs
+      logWalk("2025-12-30", 5, 0.2, 107, 117, 12, 1.4);
+      logTreadmill("2025-12-30", 10, 0.24, 107, 119, 12, 1.4);
+      logStrength("2025-12-30", [
+        { name: "biceps", sets: 3, reps: 10 },
+        { name: "laterals", sets: 3, reps: 10 }
+      ]);
+      logBP("2025-12-30", 122, 67, 90, "M Hypertension");
+
+      alert("✅ Demo data added for 2025-12-30");
+      console.log("Demo data added:", healthData);
+    });
+  </script>
+
 </body>
 </html>
-<h1>Health Dashboard 3</h1>
-
-<button id="demoLogBtn">Add Demo Data</button>
-<button id="dailySummaryBtn">Show Daily Summary</button>
-
-<div id="dailySummaryOutput"></div>
-
-<script src="./app.js"></script>

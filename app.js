@@ -1,126 +1,111 @@
-// ------------------------------
-// Health Dashboard 3 - Core App
-// ------------------------------
+// Health Dashboard 3 - Core App Skeleton
+// In-memory store for now, can save to JSON/CSV later
 
-// In-memory store (later saved to JSON/CSV)
+// Sample Data
 const healthData = {
-  dailySummary: {
-    date: "2025-12-30",
-    walkDuration: 0,   // minutes
-    walkDistance: 0,   // km
-    treadmillDuration: 0, // minutes
-    treadmillDistance: 0, // km
-    strengthDuration: 0, // reps
-    strengthExercises: 0,
-    caloriesBurned: 0,
-    avgHeartRate: null
-  },
-  bloodPressure: [],
+  date: "2025-12-30",
   walks: [],
   treadmill: [],
-  strength: []
+  strength: [],
+  bp: []
 };
 
-// ------------------------------
-// Functions to update dashboard
-// ------------------------------
-
-function updateDailySummary() {
-  const dashDiv = document.getElementById('dashboard');
-  if (!dashDiv) return;
-
-  const summary = healthData.dailySummary;
-  dashDiv.innerHTML = `
-    <h2>Daily Summary for ${summary.date}</h2>
-    <p>Walk Duration: ${summary.walkDuration} min (${summary.walkDistance} km)</p>
-    <p>Treadmill Duration: ${summary.treadmillDuration} min (${summary.treadmillDistance} km)</p>
-    <p>Strength Duration: ${summary.strengthDuration} reps (${summary.strengthExercises} exercises)</p>
-    <p>Calories Burned: ${summary.caloriesBurned}</p>
-    <p>Average Heart Rate: ${summary.avgHeartRate || "N/A"}</p>
-  `;
-}
-
-function addBloodPressure(systolic, diastolic, heartRate, type) {
-  healthData.bloodPressure.push({ systolic, diastolic, heartRate, type, time: new Date() });
-}
-
-function addWalk(duration, distance, calories, avgHR, maxHR) {
-  healthData.walks.push({ duration, distance, calories, avgHR, maxHR, time: new Date() });
-  healthData.dailySummary.walkDuration += duration;
-  healthData.dailySummary.walkDistance += distance;
-}
-
-function addTreadmill(duration, distance, calories, avgHR, maxHR) {
-  healthData.treadmill.push({ duration, distance, calories, avgHR, maxHR, time: new Date() });
-  healthData.dailySummary.treadmillDuration += duration;
-  healthData.dailySummary.treadmillDistance += distance;
-}
-
-function addStrength(reps, exercises, calories, avgHR) {
-  healthData.strength.push({ reps, exercises, calories, avgHR, time: new Date() });
-  healthData.dailySummary.strengthDuration += reps;
-  healthData.dailySummary.strengthExercises += exercises;
-}
-
+// Utility: Log messages to HTML console
 function logMessage(msg) {
-  // Display message in a dashboard log (create div#log in HTML if needed)
   const logDiv = document.getElementById('log');
   if (logDiv) {
     const p = document.createElement('p');
     p.textContent = msg;
     logDiv.appendChild(p);
   } else {
-    console.log(msg);
+    console.error('Error: Element with id "log" not found!');
   }
 }
 
-// ------------------------------
-// Iframe Section for Platforms
-// ------------------------------
+// Update Daily Summary
+function updateDailySummary() {
+  const dashboard = document.getElementById('dashboard');
+  if (!dashboard) return;
 
-function setupIframes() {
+  dashboard.innerHTML = `
+    <h2>Daily Summary for ${healthData.date}</h2>
+    <p>Walk Duration: ${sumDuration(healthData.walks)} min (${sumDistance(healthData.walks)} km)</p>
+    <p>Treadmill Duration: ${sumDuration(healthData.treadmill)} min (${sumDistance(healthData.treadmill)} km)</p>
+    <p>Strength Duration: ${sumReps(healthData.strength)} reps (${healthData.strength.length} exercises)</p>
+    <p>Calories Burned: ${sumCalories()}</p>
+    <p>Average Heart Rate: ${avgHeartRate()}</p>
+  `;
+}
+
+// Summaries
+function sumDuration(arr) {
+  return arr.reduce((a,b) => a + (b.duration || 0), 0);
+}
+function sumDistance(arr) {
+  return arr.reduce((a,b) => a + (b.distance || 0), 0).toFixed(2);
+}
+function sumReps(arr) {
+  return arr.reduce((a,b) => a + (b.reps || 0), 0);
+}
+function sumCalories() {
+  return sumDuration(healthData.walks) + sumDuration(healthData.treadmill) + sumReps(healthData.strength);
+}
+function avgHeartRate() {
+  const allHR = [...healthData.walks, ...healthData.treadmill, ...healthData.strength]
+                  .map(e => e.avgHR).filter(Boolean);
+  if (allHR.length === 0) return "N/A";
+  return Math.round(allHR.reduce((a,b)=>a+b,0)/allHR.length);
+}
+
+// Add sample BP reading
+function addBP(systolic, diastolic, hr, type) {
+  healthData.bp.push({ systolic, diastolic, hr, type, time: new Date() });
+  logMessage(`BP Added: ${systolic}/${diastolic}/${hr} ${type}`);
+}
+
+// Example: Add a walk
+function addWalk(duration, distance, calories, avgHR, maxHR) {
+  healthData.walks.push({ duration, distance, calories, avgHR, maxHR, time: new Date() });
+  logMessage(`Walk Added: ${duration}min, ${distance}km, ${calories}cal`);
+}
+
+// Example: Add treadmill
+function addTreadmill(duration, distance, speed, calories, avgHR, maxHR) {
+  healthData.treadmill.push({ duration, distance, speed, calories, avgHR, maxHR, time: new Date() });
+  logMessage(`Treadmill Added: ${duration}min, ${distance}km, ${calories}cal`);
+}
+
+// Example: Add strength
+function addStrength(exercise, reps, sets, calories, avgHR, maxHR) {
+  healthData.strength.push({ exercise, reps, sets, calories, avgHR, maxHR, time: new Date() });
+  logMessage(`Strength Added: ${exercise} ${reps}x${sets}`);
+}
+
+// Iframe Section - Add your platform URLs
+function addPlatformIframe(title, url) {
   const platformsDiv = document.getElementById('platforms');
   if (!platformsDiv) return;
 
-  const platformUrls = [
-    { name: "Cloudflare", url: "https://dash.cloudflare.com/" },
-    { name: "Netlify", url: "https://app.netlify.com/" }
-    // Add more platforms here if needed
-  ];
+  const iframe = document.createElement('iframe');
+  iframe.src = url;
+  iframe.title = title;
+  iframe.width = "100%";
+  iframe.height = "400";
+  iframe.style.border = "1px solid #ccc";
+  platformsDiv.appendChild(iframe);
 
-  platformUrls.forEach(p => {
-    const wrapper = document.createElement('div');
-    wrapper.style.margin = "10px 0";
-    wrapper.style.border = "1px solid #000";
-
-    const label = document.createElement('p');
-    label.textContent = p.name;
-    label.style.fontWeight = "bold";
-
-    const iframe = document.createElement('iframe');
-    iframe.src = p.url;
-    iframe.width = "100%";
-    iframe.height = "300px";
-    iframe.style.border = "none";
-
-    wrapper.appendChild(label);
-    wrapper.appendChild(iframe);
-    platformsDiv.appendChild(wrapper);
-  });
+  logMessage(`Iframe added: ${title}`);
 }
 
-// Optional: toggle iframe visibility for debugging
-function togglePlatforms() {
-  const pf = document.getElementById('platforms');
-  if (pf) pf.style.display = pf.style.display === 'none' ? 'block' : 'none';
-}
-
-// ------------------------------
 // Initialize Dashboard
-// ------------------------------
-
-document.addEventListener('DOMContentLoaded', () => {
-  updateDailySummary();
-  setupIframes();
+function initDashboard() {
   logMessage("Dashboard loaded");
-});
+  updateDailySummary();
+
+  // Example iframes (you can replace URLs)
+  addPlatformIframe("Cloudflare", "https://dash.cloudflare.com/");
+  addPlatformIframe("Netlify", "https://app.netlify.com/");
+  addPlatformIframe("Codesandbox", "https://codesandbox.io/dashboard");
+}
+
+window.addEventListener('DOMContentLoaded', initDashboard);

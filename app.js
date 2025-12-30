@@ -155,3 +155,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const btn = document.getElementById("weeklySummaryBtn");
   btn.addEventListener("click", renderWeeklySummary);
 });
+// Sample daily summary object
+const dailySummary = {
+    date: "2025-12-30",
+    walkDuration: "0 min (0 km)",
+    treadmillDuration: "0 min (0 km)",
+    strengthDuration: "0 reps (0 exercises)",
+    caloriesBurned: 0,
+    avgHeartRate: "N/A"
+};
+
+// Function to render the summary into #dashboard
+function renderDailySummary(summary) {
+    const dashboardDiv = document.getElementById('dashboard');
+    if (!dashboardDiv) {
+        console.error('Error: #dashboard not found!');
+        return;
+    }
+
+    dashboardDiv.innerHTML = `
+        <h2>Daily Summary for ${summary.date}</h2>
+        <p>Walk Duration: ${summary.walkDuration}</p>
+        <p>Treadmill Duration: ${summary.treadmillDuration}</p>
+        <p>Strength Duration: ${summary.strengthDuration}</p>
+        <p>Calories Burned: ${summary.caloriesBurned}</p>
+        <p>Average Heart Rate: ${summary.avgHeartRate}</p>
+    `;
+}
+
+// Render the sample summary
+renderDailySummary(dailySummary);

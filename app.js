@@ -1,107 +1,92 @@
-// Health Dashboard 3 - Core App Skeleton with Logs, Rollups, and BP
+// Health Dashboard 3 - App.js
+// Core app skeleton with daily summary + Oct 29 comparison
 
-// --- Data Storage ---
-const healthData = {
-  dailyLogs: [
-    { date: '2025-12-30', walk: 5, treadmill: 10, strength: 6, calories: 11, avgHR: 115, maxHR: 154, bp: { systolic: 128, diastolic: 70, pulse: 92 } },
-    { date: '2025-12-30', walk: 5, treadmill: 0, strength: 0, calories: 0, avgHR: 90, maxHR: 0, bp: { systolic: 126, diastolic: 67, pulse: 96 } },
-    { date: '2025-12-30', walk: 0, treadmill: 10, strength: 0, calories: 11, avgHR: 105, maxHR: 128, bp: { systolic: 126, diastolic: 67, pulse: 96 } },
-    { date: '2025-12-30', walk: 0, treadmill: 0, strength: 6, calories: 0, avgHR: 93, maxHR: 0, bp: { systolic: 126, diastolic: 69, pulse: 93 } }
-  ],
-  referenceDate: '2025-10-29'
+// Example daily log data
+const dailyLogs = {
+  "2025-10-29": {
+    walk: { duration: 20, distance: 1.5 },
+    treadmill: { duration: 15, distance: 1.2 },
+    strength: { reps: 12, exercises: 6 },
+    calories: 200,
+    avgHR: 95
+  },
+  "2025-12-30": {
+    walk: { duration: 5, distance: 0 },
+    treadmill: { duration: 10, distance: 0.24 },
+    strength: { reps: 6, exercises: 3 },
+    calories: 11,
+    avgHR: 115
+  }
 };
 
-// --- Utility Functions ---
-function sum(arr, key) {
-  return arr.reduce((acc, log) => acc + (log[key] || 0), 0);
+// Reference date for comparison
+const referenceDate = "2025-10-29";
+
+// Utility to calculate color based on difference
+function colorDiff(current, reference) {
+  if (current > reference) return "green";
+  if (current < reference) return "red";
+  return "black";
 }
 
-function avg(arr, key) {
-  const values = arr.map(l => l[key]).filter(v => v != null && !isNaN(v));
-  return values.length ? (values.reduce((a,b)=>a+b,0)/values.length).toFixed(1) : 0;
-}
-
-// --- Render Functions ---
-function renderDashboard() {
-  const dashboardDiv = document.getElementById('dashboard');
-  dashboardDiv.innerHTML = `<h2>Daily Summary for ${healthData.dailyLogs[0].date}</h2>`;
-
-  const daily = healthData.dailyLogs.filter(d => d.date === healthData.dailyLogs[0].date);
-
-  const totalWalk = sum(daily, 'walk');
-  const totalTreadmill = sum(daily, 'treadmill');
-  const totalStrength = sum(daily, 'strength');
-  const totalCalories = sum(daily, 'calories');
-  const avgHR = avg(daily, 'avgHR');
-
-  // Latest BP
-  const latestBP = daily[daily.length -1].bp;
-
-  dashboardDiv.innerHTML += `
-    <p>Walk Duration: ${totalWalk} min</p>
-    <p>Treadmill Duration: ${totalTreadmill} min</p>
-    <p>Strength Duration: ${totalStrength} reps</p>
-    <p>Calories Burned: ${totalCalories}</p>
-    <p>Average Heart Rate: ${avgHR}</p>
-    <p>Blood Pressure: ${latestBP.systolic}/${latestBP.diastolic} / Pulse ${latestBP.pulse}</p>
-  `;
-}
-
-// --- 7-Day Rolling Summaries ---
-function rolling7Day() {
-  const dashboardDiv = document.getElementById('dashboard');
-  dashboardDiv.innerHTML += `<h3>7-Day Rolling Summary</h3>`;
-
-  const today = new Date(healthData.dailyLogs[0].date);
-  const sevenDayLogs = healthData.dailyLogs.filter(d => {
-    const dDate = new Date(d.date);
-    return (today - dDate) / (1000*60*60*24) < 7;
+// Populate date dropdown
+function populateDateDropdown() {
+  const select = document.createElement("select");
+  select.id = "dateDropdown";
+  
+  Object.keys(dailyLogs).forEach(date => {
+    const option = document.createElement("option");
+    option.value = date;
+    option.textContent = date;
+    select.appendChild(option);
   });
-
-  const totalWalk = sum(sevenDayLogs, 'walk');
-  const totalTreadmill = sum(sevenDayLogs, 'treadmill');
-  const totalStrength = sum(sevenDayLogs, 'strength');
-  const totalCalories = sum(sevenDayLogs, 'calories');
-  const avgHR = avg(sevenDayLogs, 'avgHR');
-
-  dashboardDiv.innerHTML += `
-    <p>Total Walk: ${totalWalk} min</p>
-    <p>Total Treadmill: ${totalTreadmill} min</p>
-    <p>Total Strength: ${totalStrength} reps</p>
-    <p>Total Calories: ${totalCalories}</p>
-    <p>Average HR: ${avgHR}</p>
-  `;
+  
+  select.addEventListener("change", () => renderSummary(select.value));
+  document.getElementById("dashboard").appendChild(select);
 }
 
-// --- Monthly Rollup ---
-function monthlyRollup(month='12', year='2025') {
-  const dashboardDiv = document.getElementById('dashboard');
-  dashboardDiv.innerHTML += `<h3>Monthly Rollup (${month}/${year})</h3>`;
+// Render daily summary with comparison
+function renderSummary(date) {
+  const summaryDiv = document.getElementById("summary") || document.createElement("div");
+  summaryDiv.id = "summary";
+  summaryDiv.innerHTML = ""; // clear previous
+  
+  const log = dailyLogs[date];
+  const refLog = dailyLogs[referenceDate];
 
-  const monthLogs = healthData.dailyLogs.filter(d => {
-    const [y, m] = d.date.split('-');
-    return y===year && m===month;
+  const metrics = [
+    { name: "Walk Duration (min)", key: "walk", sub: "duration" },
+    { name: "Walk Distance (km)", key: "walk", sub: "distance" },
+    { name: "Treadmill Duration (min)", key: "treadmill", sub: "duration" },
+    { name: "Treadmill Distance (km)", key: "treadmill", sub: "distance" },
+    { name: "Strength Reps", key: "strength", sub: "reps" },
+    { name: "Strength Exercises", key: "strength", sub: "exercises" },
+    { name: "Calories Burned", key: "calories" },
+    { name: "Average Heart Rate", key: "avgHR" }
+  ];
+
+  metrics.forEach(metric => {
+    const currentVal = metric.sub ? log[metric.key][metric.sub] : log[metric.key];
+    const refVal = metric.sub ? refLog[metric.key][metric.sub] : refLog[metric.key];
+    
+    const p = document.createElement("p");
+    p.textContent = `${metric.name}: ${currentVal} (Ref: ${refVal})`;
+    p.style.color = colorDiff(currentVal, refVal);
+    summaryDiv.appendChild(p);
   });
-
-  const totalWalk = sum(monthLogs, 'walk');
-  const totalTreadmill = sum(monthLogs, 'treadmill');
-  const totalStrength = sum(monthLogs, 'strength');
-  const totalCalories = sum(monthLogs, 'calories');
-  const avgHR = avg(monthLogs, 'avgHR');
-
-  dashboardDiv.innerHTML += `
-    <p>Total Walk: ${totalWalk} min</p>
-    <p>Total Treadmill: ${totalTreadmill} min</p>
-    <p>Total Strength: ${totalStrength} reps</p>
-    <p>Total Calories: ${totalCalories}</p>
-    <p>Average HR: ${avgHR}</p>
-  `;
+  
+  document.getElementById("dashboard").appendChild(summaryDiv);
 }
 
-// --- Initialize Dashboard ---
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('Dashboard loaded');
-  renderDashboard();
-  rolling7Day();
-  monthlyRollup();
-});
+// Initialize dashboard
+function initDashboard() {
+  const title = document.createElement("h2");
+  title.textContent = "Daily Summary";
+  document.getElementById("dashboard").appendChild(title);
+  
+  populateDateDropdown();
+  renderSummary(Object.keys(dailyLogs)[0]); // show first date by default
+}
+
+// Run
+initDashboard();

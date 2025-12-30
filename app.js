@@ -1,4 +1,3 @@
-// Ensure this runs after the DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
 
   const dailyLogs = {
@@ -27,22 +26,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderSummary(date) {
-    const dashboard = document.getElementById("dashboard");
-    if (!dashboard) {
-      console.error("Dashboard element not found!");
+    const summaryDiv = document.getElementById("dailySummaryOutput");
+    if (!summaryDiv) {
+      console.error("dailySummaryOutput element not found!");
       return;
     }
-
-    let summaryDiv = document.getElementById("summary");
-    if (!summaryDiv) {
-      summaryDiv = document.createElement("div");
-      summaryDiv.id = "summary";
-      dashboard.appendChild(summaryDiv);
-    }
-    summaryDiv.innerHTML = ""; // Clear old summary
-
     const log = dailyLogs[date];
     const refLog = dailyLogs[referenceDate];
+
+    summaryDiv.innerHTML = ""; // Clear old summary
 
     const metrics = [
       { name: "Walk Duration (min)", key: "walk", sub: "duration" },
@@ -59,33 +51,24 @@ document.addEventListener("DOMContentLoaded", () => {
       const currentVal = metric.sub ? log[metric.key][metric.sub] : log[metric.key];
       const refVal = metric.sub ? refLog[metric.key][metric.sub] : refLog[metric.key];
 
-      const p = document.createElement("p");
-      p.textContent = `${metric.name}: ${currentVal} (Ref: ${refVal})`;
-      p.style.color = colorDiff(currentVal, refVal);
-      summaryDiv.appendChild(p);
+      const div = document.createElement("div");
+      div.textContent = `${metric.name}: ${currentVal} (Ref: ${refVal})`;
+      div.style.color = colorDiff(currentVal, refVal);
+      summaryDiv.appendChild(div);
     });
   }
 
-  function populateDateDropdown() {
-    const dashboard = document.getElementById("dashboard");
-    if (!dashboard) return;
-
-    const select = document.createElement("select");
-    select.id = "dateDropdown";
-
-    Object.keys(dailyLogs).forEach(date => {
-      const option = document.createElement("option");
-      option.value = date;
-      option.textContent = date;
-      select.appendChild(option);
+  // Wire up the existing date picker
+  const datePicker = document.getElementById("datePicker");
+  if (datePicker) {
+    datePicker.addEventListener("change", () => {
+      if (dailyLogs[datePicker.value]) {
+        renderSummary(datePicker.value);
+      }
     });
-
-    select.addEventListener("change", () => renderSummary(select.value));
-    dashboard.appendChild(select);
-
-    renderSummary(select.value); // Render first date initially
+    // Set default value to first date in logs
+    datePicker.value = Object.keys(dailyLogs)[0];
+    renderSummary(datePicker.value);
   }
-
-  populateDateDropdown();
 
 });

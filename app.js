@@ -1,3 +1,23 @@
+// app.js (top)
+const healthHistory = {
+  "2025-12-30": {
+    walks: [
+      { start: "03:10", end: "03:15", duration: 5, distance: 0.2, calories: null, avgHR: null, maxHR: null, notes: "Morning non-Siri walk" },
+      { start: "07:35", end: "07:40", duration: 5, distance: 0.2, calories: null, avgHR: null, maxHR: null, notes: "Morning Siri walk" }
+    ],
+    treadmill: [
+      { start: "10:00", end: "10:10", duration: 10, distance: 0.24, calories: 11, avgHR: 115, maxHR: 154, speed: 1.4, notes: "Morning treadmill session" }
+    ],
+    strength: [
+      { start: "07:54", end: "08:08", exercises: [{name: "lateral", sets:3, reps:10}, {name:"biceps", sets:3, reps:10}], notes: "Morning strength training" },
+      { start: "12:08", end: "12:23", exercises: [{name: "lateral", sets:3, reps:10}, {name:"biceps", sets:3, reps:10}], notes: "Midday strength training" }
+    ],
+    bp: [
+      { time: "08:13", systolic: 126, diastolic: 69, pulse: 93, category: "M Hypertension", notes: "5 min after morning strength" },
+      { time: "10:15", systolic: 128, diastolic: 65, pulse: 92, category: "M Hypertension", notes: "After treadmill" }
+    ]
+  }
+};
 function renderDashboard() {
   const dashboard = document.getElementById('dashboard');
   dashboard.innerHTML = ''; // Clear previous content

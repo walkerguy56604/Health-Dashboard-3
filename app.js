@@ -1,3 +1,4 @@
+console.log("Dashboard 3 loaded");
 console.log("Health Dashboard 3 - 7-Day Summary with Sparklines 👊");
 
 // =======================

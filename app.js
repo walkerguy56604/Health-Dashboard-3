@@ -1,3 +1,4 @@
+console.log("App.js loaded");
 document.addEventListener('DOMContentLoaded', () => {
   // Your existing code goes here
   // For example:

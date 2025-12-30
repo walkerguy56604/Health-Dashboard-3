@@ -1,3 +1,15 @@
+document.addEventListener('DOMContentLoaded', () => {
+  // Your existing code goes here
+  // For example:
+  const btn = document.getElementById('showDailySummaryBtn');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const today = '2025_12_30';
+      loadDailySummary(today);
+    });
+  }
+});
+
 // === Health Dashboard 3: Core App Skeleton ===
 
 // Simple in-memory store (later can save to JSON/CSV)

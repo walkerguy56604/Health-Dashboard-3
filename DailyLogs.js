@@ -10,3 +10,5 @@
   calories: 0,
   heartRate: 0 // will update later if needed
 }
+// Add the after-strength BP to today's entry
+dailyLogs["2025-12-31"].bloodPressure.push({ systolic: 144, diastolic: 75, heartRate: 87 });

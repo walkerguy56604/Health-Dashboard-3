@@ -11,7 +11,7 @@
       padding: 20px;
     }
 
-    h1 {
+    h1, h2 {
       text-align: center;
     }
 
@@ -43,6 +43,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 5px;
+      justify-content: center;
     }
 
     #historyList button {
@@ -63,6 +64,22 @@
       width: 100%;
       height: 250px;
     }
+
+    #exportButtons {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    #exportButtons button {
+      padding: 8px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background-color: #f0f0f0;
+    }
   </style>
 </head>
 <body>
@@ -75,6 +92,12 @@
   <!-- Daily Summary -->
   <div id="dailySummaryOutput"></div>
 
+  <!-- Export Buttons -->
+  <div id="exportButtons">
+    <button onclick="exportCSV()">Export CSV</button>
+    <button onclick="exportJSON()">Export JSON</button>
+  </div>
+
   <!-- Scrollable History Buttons -->
   <h2>History</h2>
   <div id="historyList"></div>
@@ -85,8 +108,10 @@
     <canvas id="trendChart"></canvas>
   </div>
 
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <!-- App JS -->
   <script src="app.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>

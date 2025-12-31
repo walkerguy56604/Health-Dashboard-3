@@ -10,75 +10,20 @@
       color: #0f172a;
       padding: 20px;
     }
-
-    h1, h2 {
-      text-align: center;
+    h1 { text-align: center; }
+    label, input { display: block; margin-bottom: 10px; font-size: 16px; }
+    #dailySummaryOutput, #trendContainer {
+      margin-top: 20px; padding: 15px; background-color: #fff;
+      border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-
-    label, input {
-      display: block;
-      margin-bottom: 10px;
-      font-size: 16px;
-    }
-
-    #dailySummaryOutput {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    #dailySummaryOutput h3, #dailySummaryOutput h4 {
-      margin-top: 10px;
-      margin-bottom: 5px;
-    }
-
-    #dailySummaryOutput div {
-      margin-bottom: 6px;
-    }
-
-    #historyList {
-      margin-top: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      justify-content: center;
-    }
-
-    #historyList button {
-      padding: 5px 10px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    #trendContainer {
-      margin-top: 30px;
-      padding: 15px;
-      background-color: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    canvas {
-      width: 100%;
-      height: 250px;
-    }
-
-    #exportButtons {
-      margin-top: 20px;
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-    }
-
-    #exportButtons button {
-      padding: 8px 15px;
-      font-size: 14px;
-      cursor: pointer;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      background-color: #f0f0f0;
+    #dailySummaryOutput h3, #dailySummaryOutput h4 { margin-top: 10px; margin-bottom: 5px; }
+    #dailySummaryOutput div { margin-bottom: 6px; }
+    #historyList { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 5px; }
+    #historyList button { padding: 5px 10px; font-size: 14px; cursor: pointer; }
+    canvas { width: 100%; height: 250px; }
+    #actionButtons { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
+    #actionButtons button, #actionButtons input[type="file"] {
+      padding: 5px 10px; font-size: 14px; cursor: pointer;
     }
   </style>
 </head>
@@ -89,14 +34,14 @@
   <label for="datePicker">Select Date:</label>
   <input type="date" id="datePicker">
 
+  <!-- Action Buttons -->
+  <div id="actionButtons">
+    <button id="exportCSVBtn">Export CSV</button>
+    <input type="file" id="importXML" accept=".xml">
+  </div>
+
   <!-- Daily Summary -->
   <div id="dailySummaryOutput"></div>
-
-  <!-- Export Buttons -->
-  <div id="exportButtons">
-    <button onclick="exportCSV()">Export CSV</button>
-    <button onclick="exportJSON()">Export JSON</button>
-  </div>
 
   <!-- Scrollable History Buttons -->
   <h2>History</h2>
@@ -108,10 +53,40 @@
     <canvas id="trendChart"></canvas>
   </div>
 
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
   <!-- App JS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="app.js"></script>
+
+  <script>
+    // Export CSV button
+    document.getElementById('exportCSVBtn').addEventListener('click', () => {
+      if(typeof exportCSV === "function") exportCSV();
+    });
+
+    // Import Apple Health XML
+    document.getElementById('importXML').addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        const xmlString = e.target.result;
+        const date = document.getElementById('datePicker').value || new Date().toISOString().split('T')[0];
+        mapAppleHealthXML(xmlString, date);
+        renderDailySummary(date);
+        renderBPTrends(date, 7);
+
+        // Add to history if new
+        const history = document.getElementById("historyList");
+        if(![...history.children].some(b=>b.dataset.date===date)){
+          const btn = document.createElement("button");
+          btn.textContent = date;
+          btn.dataset.date = date;
+          btn.onclick = () => { renderDailySummary(date); renderBPTrends(date,7); };
+          history.prepend(btn);
+        }
+      };
+      reader.readAsText(file);
+    });
+  </script>
 </body>
 </html>

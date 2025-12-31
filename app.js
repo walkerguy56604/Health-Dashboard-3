@@ -4,9 +4,8 @@
 import { dailyLogs } from './data/dailyLogs.js';
 
 // =======================
-// Update Today's Entries
-// =======================
-dailyLogs["2025-12-31"].bloodPressure.push({ systolic: 137, diastolic: 72, heartRate: 86 }); // latest post-strength
+// Update Today's Entries (latest post-strength)
+dailyLogs["2025-12-31"].bloodPressure.push({ systolic: 137, diastolic: 72, heartRate: 86 });
 
 // =======================
 // Baseline
@@ -69,7 +68,7 @@ function get7DayRolling(date) {
 // =======================
 // Render Daily Summary
 // =======================
-function renderDailySummary(date) {
+export function renderDailySummary(date) {
   const out = document.getElementById("dailySummaryOutput");
   const d = dailyLogs[date];
   if(!d) { out.innerHTML = `<div>No data for ${date}</div>`; return; }
@@ -88,7 +87,7 @@ function renderDailySummary(date) {
   // Glucose
   html += `<h4>Glucose</h4>`;
   d.glucose.length
-    ? d.glucose.forEach((g,i)=> html += `<div>${g.value??g} mmol/L${g.time? " (Time:"+g.time+")":""}</div>`)
+    ? d.glucose.forEach(g=> html += `<div>${g.value??g} mmol/L${g.time? " (Time:"+g.time+")":""}</div>`)
     : html += `<div>No glucose</div>`;
 
   // Activity
@@ -154,7 +153,7 @@ picker.addEventListener("change", e=>{
 // BP Trend Chart
 // =======================
 let bpChart=null;
-function renderBPTrends(endDate, days=7){
+export function renderBPTrends(endDate, days=7){
   const lastDays = getLastNDates(endDate,days);
   const datasets=[];
 
@@ -191,9 +190,7 @@ function renderBPTrends(endDate, days=7){
 // =======================
 // Export Buttons
 // =======================
-const exportContainer = document.createElement('div');
-exportContainer.style.marginTop = '15px';
-document.body.insertBefore(exportContainer, document.getElementById('trendContainer'));
+const exportContainer = document.getElementById('exportContainer');
 
 // JSON Export
 const exportJSONBtn = document.createElement('button');
@@ -225,7 +222,7 @@ exportContainer.appendChild(exportCSVBtn);
 // =======================
 // CSV Export Function
 // =======================
-function exportSelectedCSV(date){
+export function exportSelectedCSV(date){
   const day = dailyLogs[date];
   const rows = [];
 
@@ -249,4 +246,45 @@ function exportSelectedCSV(date){
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+}
+
+// =======================
+// Apple Health Import
+// =======================
+const appleInput = document.createElement('input');
+appleInput.type = 'file';
+appleInput.accept = '.json';
+appleInput.onchange = (e) => {
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    try {
+      const jsonData = JSON.parse(event.target.result);
+      mapAppleHealthData(jsonData);
+      alert("Apple Health data imported!");
+    } catch(err) {
+      alert("Error parsing JSON: " + err.message);
+    }
+  };
+  reader.readAsText(file);
+};
+exportContainer.appendChild(appleInput);
+
+// =======================
+// Apple Health Mapper (example)
+// =======================
+export function mapAppleHealthData(jsonData){
+  // Map imported data to dailyLogs format
+  jsonData.forEach(entry => {
+    const date = entry.date;
+    if(!dailyLogs[date]) dailyLogs[date] = { bloodPressure: [], glucose: [], walk:0, treadmill:0, strength:0, calories:0, heartRate:0 };
+    if(entry.bloodPressure) dailyLogs[date].bloodPressure.push(entry.bloodPressure);
+    if(entry.glucose) dailyLogs[date].glucose.push(entry.glucose);
+    if(entry.walk) dailyLogs[date].walk += entry.walk;
+    if(entry.treadmill) dailyLogs[date].treadmill += entry.treadmill;
+    if(entry.strength) dailyLogs[date].strength += entry.strength;
+    if(entry.calories) dailyLogs[date].calories += entry.calories;
+    if(entry.heartRate) dailyLogs[date].heartRate = entry.heartRate;
+  });
 }

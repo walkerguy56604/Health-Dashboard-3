@@ -1,4 +1,23 @@
 // =======================
+// Auto-create today's button if missing
+// =======================
+function addTodayButton() {
+  const today = new Date().toISOString().split('T')[0];
+  if (![...history.children].some(b => b.dataset.date === today)) {
+    const btn = document.createElement("button");
+    btn.textContent = today;
+    btn.dataset.date = today;
+    btn.onclick = () => { 
+      renderDailySummary(today); 
+      renderBPTrends(today, 7); 
+    };
+    history.prepend(btn); // newest on top
+  }
+}
+
+// Call it once on page load
+addTodayButton();
+// =======================
 // Historical Data
 // =======================
 const dailyLogs = {

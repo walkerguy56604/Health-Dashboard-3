@@ -84,11 +84,20 @@
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="app.js"></script>
+  <script type="module" src="app.js"></script>
 
-  <script>
+  <script type="module">
+    import { mapAppleHealthData, exportSelectedCSV } from './app.js';
+
     // CSV Export Button
-    document.getElementById("exportCSVBtn").addEventListener("click", exportCSV);
+    document.getElementById("exportCSVBtn").addEventListener("click", () => {
+      const selectedDate = document.getElementById("datePicker").value;
+      if(!selectedDate) {
+        alert("Please select a date!");
+        return;
+      }
+      exportSelectedCSV(selectedDate);
+    });
 
     // Apple Health Import
     document.getElementById("appleHealthImport").addEventListener("change", (e) => {

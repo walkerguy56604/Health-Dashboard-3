@@ -3,6 +3,36 @@
 // =======================
 
 // Create container for buttons
+// =======================
+// Export Selected Date Button
+// =======================
+const exportSelectedBtn = document.createElement('button');
+exportSelectedBtn.textContent = 'Export Selected Date';
+exportSelectedBtn.onclick = () => {
+  const selectedDate = document.getElementById('datePicker').value;
+  if(!selectedDate || !dailyLogs[selectedDate]){
+    alert('No data for the selected date!');
+    return;
+  }
+  exportSelectedJSON(selectedDate);
+};
+exportContainer.appendChild(exportSelectedBtn);
+
+// =======================
+// Function: Export Selected Date as JSON
+// =======================
+function exportSelectedJSON(date){
+  const data = { [date]: dailyLogs[date] };
+  const dataStr = JSON.stringify(data, null, 2);
+  const blob = new Blob([dataStr], {type: "application/json"});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `health_log_${date}.json`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 const exportContainer = document.createElement('div');
 exportContainer.style.marginTop = '20px';
 exportContainer.style.display = 'flex';

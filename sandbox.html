@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Health Sandbox Test</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f7f8fa; color: #0f172a; }
+    h1 { text-align: center; }
+    #dailySummaryOutput { margin-top: 20px; padding: 15px; background: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+  </style>
+</head>
+<body>
+  <h1>Health Sandbox Test</h1>
+  <div id="dailySummaryOutput"></div>
+
+  <script>
+    // ======= Minimal Daily Log =======
+    const dailyLog = {
+      "2025-12-31": {
+        bloodPressure: [
+          { systolic: 130, diastolic: 69, heartRate: 80 },
+          { systolic: 125, diastolic: 59, heartRate: 88 }
+        ],
+        glucose: [
+          { value: 5.4 }
+        ],
+        walk: 5,
+        treadmill: 10,
+        strength: 20,
+        calories: 200,
+        heartRate: 85
+      }
+    };
+
+    const today = "2025-12-31";
+
+    // ======= Helpers =======
+    function getBPCategory(s,d){
+      if(s>=140||d>=90) return "H";
+      if(s>=120||d>=80) return "M";
+      return "L";
+    }
+    function getBPColor(cat){ return cat==="H"?"red":cat==="M"?"orange":"green"; }
+
+    // ======= Render Summary =======
+    function renderDailySummary(date){
+      const out = document.getElementById("dailySummaryOutput");
+      const d = dailyLog[date];
+      if(!d){ out.innerHTML = `<div>No data for ${date}</div>`; return; }
+
+      let html = `<h3>${date}</h3>`;
+      // BP
+      html += `<h4>Blood Pressure</h4>`;
+      d.bloodPressure.forEach((bp,i)=>{
+        const cat = getBPCategory(bp.systolic,bp.diastolic);
+        html += `<div style="color:${getBPColor(cat)}">BP #${i+1}: ${bp.systolic}/${bp.diastolic} HR:${bp.heartRate} (${cat})</div>`;
+      });
+      // Glucose
+      html += `<h4>Glucose</h4>`;
+      d.glucose.forEach(g=> html += `<div>${g.value} mmol/L</div>`);
+      // Activity
+      html += `<h4>Activity</h4>
+        <div>Walk: ${d.walk} min</div>
+        <div>Treadmill: ${d.treadmill} min</div>
+        <div>Strength: ${d.strength} reps</div>
+        <div>Calories: ${d.calories}</div>
+        <div>Avg HR: ${d.heartRate}</div>
+      `;
+      out.innerHTML = html;
+    }
+
+    // ======= Run it =======
+    renderDailySummary(today);
+  </script>
+</body>
+</html>

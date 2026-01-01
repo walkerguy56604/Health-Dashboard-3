@@ -1,5 +1,4 @@
 import { dailyLogs } from "./data/dailyLogs.js";
-import { dailyLogs } from './dailyLogs.js';
 
 const today = "2025-12-31";
 if (!dailyLogs[today]) dailyLogs[today] = { bloodPressure: [], glucose: [], walk:0, treadmill:0, strength:0, calories:0, heartRate:0 };

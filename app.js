@@ -2,36 +2,12 @@
 // Import Daily Logs
 // =======================
 import { dailyLogs } from './data/dailyLogs.js';
-// =======================
-// Import Daily Logs
-// =======================
-import { dailyLogs } from './data/dailyLogs.js';
 
 // =======================
 // Pre-fill Today's Entries (Blood Pressure, Glucose, Activity)
 // =======================
 const today = "2025-12-31";
 
-dailyLogs[today].bloodPressure.push(
-  { systolic: 130, diastolic: 69, heartRate: 80 }, // first reading
-  { systolic: 121, diastolic: 67, heartRate: 80 }, // second reading
-  { systolic: 144, diastolic: 75, heartRate: 87 }, // post-strength
-  { systolic: 137, diastolic: 72, heartRate: 86 }, // latest post-strength
-  { systolic: 125, diastolic: 59, heartRate: 88 }  // post-walk/treadmill
-);
-
-dailyLogs[today].glucose.push({ value: 5.4 });
-
-// Pre-fill Activity
-dailyLogs[today].walk = 45;        // minutes for after-dinner walk
-dailyLogs[today].treadmill = 10;   // minutes on treadmill
-dailyLogs[today].strength = 14;    // total reps from strength training
-dailyLogs[today].calories = 11;    // calories from treadmill session
-dailyLogs[today].heartRate = 97;   // average heart rate during walk/treadmill
-// =======================
-// Today's Entries Setup
-// =======================
-const today = "2025-12-31";
 if (!dailyLogs[today]) {
   dailyLogs[today] = {
     bloodPressure: [],
@@ -44,20 +20,26 @@ if (!dailyLogs[today]) {
   };
 }
 
-// Add all BP readings for today
+// Blood Pressure Readings
 dailyLogs[today].bloodPressure.push(
-  { systolic: 130, diastolic: 69, heartRate: 80 }, // first reading
-  { systolic: 121, diastolic: 67, heartRate: 80 }, // second reading
-  { systolic: 144, diastolic: 75, heartRate: 87 }, // post-strength
-  { systolic: 137, diastolic: 72, heartRate: 86 }, // latest post-strength
-  { systolic: 125, diastolic: 59, heartRate: 88 }  // post-walk/treadmill
+  { systolic: 130, diastolic: 69, heartRate: 80 },
+  { systolic: 121, diastolic: 67, heartRate: 80 },
+  { systolic: 144, diastolic: 75, heartRate: 87 },
+  { systolic: 137, diastolic: 72, heartRate: 86 },
+  { systolic: 125, diastolic: 59, heartRate: 88 }
 );
 
-// Add glucose reading
+// Glucose Reading
 dailyLogs[today].glucose.push({ value: 5.4 });
 
+// Activity Updates
+dailyLogs[today].walk += 5 + 45;
+dailyLogs[today].treadmill += 10 + 10;
+dailyLogs[today].strength += 14 + 12;
+dailyLogs[today].calories += 12 + 11;
+
 // =======================
-// Baseline
+// Baseline Date
 // =======================
 const baselineDate = "2024-10-29";
 
@@ -124,7 +106,6 @@ function renderDailySummary(date) {
 
   let html = `<h3>${date}</h3>`;
 
-  // Blood Pressure
   html += `<h4>Blood Pressure</h4>`;
   d.bloodPressure.length
     ? d.bloodPressure.forEach((bp,i)=>{
@@ -133,13 +114,11 @@ function renderDailySummary(date) {
       })
     : html += `<div>No BP recorded</div>`;
 
-  // Glucose
   html += `<h4>Glucose</h4>`;
   d.glucose.length
-    ? d.glucose.forEach(g=> html += `<div>${g.value} mmol/L${g.time? " (Time:"+g.time+")":""}</div>`)
+    ? d.glucose.forEach((g,i)=> html += `<div>${g.value??g} mmol/L${g.time? " (Time:"+g.time+")":""}</div>`)
     : html += `<div>No glucose</div>`;
 
-  // Activity
   html += `
     <h4>Activity</h4>
     <div>Walk: ${d.walk} min</div>
@@ -149,18 +128,19 @@ function renderDailySummary(date) {
     <div>Avg HR: ${d.heartRate}</div>
   `;
 
-  // 7-day rolling averages
   const r = get7DayRolling(date);
-  html += `
-    <h4>7-Day Rolling Averages</h4>
-    <div>BP: ${r.bpSys}/${r.bpDia}</div>
-    <div>Glucose: ${r.glucose}</div>
-    <div>Walk: ${r.walk} min</div>
-    <div>Treadmill: ${r.treadmill} min</div>
-    <div>Strength: ${r.strength} reps</div>
-    <div>Calories: ${r.calories}</div>
-    <div>Avg HR: ${r.heartRate}</div>
-  `;
+  if(r){
+    html += `
+      <h4>7-Day Rolling Averages</h4>
+      <div>BP: ${r.bpSys}/${r.bpDia}</div>
+      <div>Glucose: ${r.glucose}</div>
+      <div>Walk: ${r.walk} min</div>
+      <div>Treadmill: ${r.treadmill} min</div>
+      <div>Strength: ${r.strength} reps</div>
+      <div>Calories: ${r.calories}</div>
+      <div>Avg HR: ${r.heartRate}</div>
+    `;
+  }
 
   out.innerHTML = html;
 }
@@ -186,7 +166,7 @@ picker.addEventListener("change", e=>{
   renderDailySummary(date);
   renderBPTrends(date,7);
   if(![...history.children].some(b=>b.dataset.date===date)){
-    const btn=document.createElement('button');
+    const btn=document.createElement("button");
     btn.textContent=date;
     btn.dataset.date=date;
     btn.onclick=()=>{ renderDailySummary(date); renderBPTrends(date,7); };

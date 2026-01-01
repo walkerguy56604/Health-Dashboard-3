@@ -141,5 +141,24 @@
     };
     document.getElementById("exportContainer").appendChild(appleInput);
   </script>
+  <script>
+  const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+  const datePicker = document.getElementById('datePicker');
+  datePicker.value = today;
+
+  // Auto-render today's summary and trends
+  if(typeof renderDailySummary === 'function' && typeof renderBPTrends === 'function'){
+    renderDailySummary(today);
+    renderBPTrends(today, 7);
+    // Also add today to history buttons if not already present
+    if(![...document.getElementById('historyList').children].some(b => b.dataset.date === today)){
+      const btn = document.createElement('button');
+      btn.textContent = today;
+      btn.dataset.date = today;
+      btn.onclick = () => { renderDailySummary(today); renderBPTrends(today,7); };
+      document.getElementById('historyList').prepend(btn);
+    }
+  }
+</script>
 </body>
 </html>

@@ -1,113 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Health Dashboard Sandbox</title>
-<style>
-  body { font-family: Arial, sans-serif; background-color: #f7f8fa; color: #0f172a; padding: 20px; }
-  h1 { text-align: center; }
-  #dailySummary { margin-top: 20px; padding: 15px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-  canvas { width: 100%; height: 200px; margin-top: 20px; }
-</style>
+  <meta charset="UTF-8">
+  <title>Health Dashboard Sandbox</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    h1, h2 { text-align: center; }
+    #dailySummaryOutput { margin-top: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 8px; }
+    canvas { width: 100%; height: 250px; margin-top: 20px; }
+  </style>
 </head>
 <body>
-<h1>Sandbox Health Dashboard</h1>
+  <h1>Health Dashboard Sandbox</h1>
+  <label for="datePicker">Select Date:</label>
+  <input type="date" id="datePicker">
+  
+  <div id="dailySummaryOutput"></div>
+  
+  <canvas id="trendChart"></canvas>
 
-<div id="dailySummary"></div>
-<canvas id="bpChart"></canvas>
+  <script>
+    // ==== Sample single day data ====
+    const dailyLogs = {
+      "2025-12-31": {
+        bloodPressure: [
+          { systolic: 130, diastolic: 69, heartRate: 80 },
+          { systolic: 121, diastolic: 67, heartRate: 80 },
+          { systolic: 144, diastolic: 75, heartRate: 87 }
+        ],
+        glucose: [{ value: 5.4 }],
+        walk: 30,
+        treadmill: 20,
+        strength: 50,
+        calories: 2000,
+        heartRate: 82
+      }
+    };
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-// ===== Hardcoded Single-Day Data =====
-const today = "2025-12-31";
-const dailyLogs = {
-  [today]: {
-    bloodPressure: [
-      { systolic: 130, diastolic: 69, heartRate: 80 },
-      { systolic: 121, diastolic: 67, heartRate: 80 },
-      { systolic: 144, diastolic: 75, heartRate: 87 },
-      { systolic: 137, diastolic: 72, heartRate: 86 },
-      { systolic: 125, diastolic: 59, heartRate: 88 }
-    ],
-    glucose: [ { value: 5.4 } ],
-    walk: 10,
-    treadmill: 5,
-    strength: 20,
-    calories: 200,
-    heartRate: 82
-  }
-};
-
-// ===== Helpers =====
-function getBPCategory(s, d) {
-  if (s >= 140 || d >= 90) return "H";
-  if (s >= 120 || d >= 80) return "M";
-  return "L";
-}
-function getBPColor(cat) {
-  return cat === "H" ? "red" : cat === "M" ? "orange" : "green";
-}
-
-// ===== Render Summary =====
-function renderDailySummary(date) {
-  const d = dailyLogs[date];
-  const out = document.getElementById("dailySummary");
-  if (!d) { out.innerHTML = "<div>No data</div>"; return; }
-
-  let html = `<h2>${date}</h2>`;
-  html += "<h3>Blood Pressure</h3>";
-  d.bloodPressure.forEach((bp, i) => {
-    const cat = getBPCategory(bp.systolic, bp.diastolic);
-    html += `<div style="color:${getBPColor(cat)}">BP #${i+1}: ${bp.systolic}/${bp.diastolic} HR:${bp.heartRate} (${cat})</div>`;
-  });
-
-  html += "<h3>Glucose</h3>";
-  d.glucose.forEach(g => { html += `<div>${g.value} mmol/L</div>`; });
-
-  html += `
-    <h3>Activity</h3>
-    <div>Walk: ${d.walk} min</div>
-    <div>Treadmill: ${d.treadmill} min</div>
-    <div>Strength: ${d.strength} reps</div>
-    <div>Calories: ${d.calories}</div>
-    <div>Avg HR: ${d.heartRate}</div>
-  `;
-
-  out.innerHTML = html;
-}
-
-// ===== Render BP Chart =====
-function renderBPChart(date) {
-  const d = dailyLogs[date];
-  const labels = d.bloodPressure.map((_, i) => `BP #${i+1}`);
-  const data = d.bloodPressure.map(bp => bp.systolic);
-  const colors = d.bloodPressure.map(bp => getBPColor(getBPCategory(bp.systolic, bp.diastolic)));
-
-  const ctx = document.getElementById("bpChart").getContext("2d");
-  new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: labels,
-      datasets: [{
-        label: "Systolic BP",
-        data: data,
-        borderColor: "blue",
-        backgroundColor: "rgba(0,0,0,0)",
-        pointBackgroundColor: colors,
-        tension: 0.3
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { position: "top" } },
-      scales: { y: { suggestedMin: 50, suggestedMax: 160 } }
+    // ==== Helpers ====
+    function getBPCategory(s, d) {
+      if(s>=140||d>=90) return "H";
+      if(s>=120||d>=80) return "M";
+      return "L";
     }
-  });
-}
+    function getBPColor(cat) {
+      return cat==="H"?"red":cat==="M"?"orange":"green";
+    }
 
-// ===== Initialize =====
-renderDailySummary(today);
-renderBPChart(today);
-</script>
+    // ==== Render Daily Summary ====
+    function renderDailySummary(date){
+      const out = document.getElementById("dailySummaryOutput");
+      const d = dailyLogs[date];
+      if(!d){ out.innerHTML="<div>No data</div>"; return; }
+
+      let html = `<h2>${date}</h2>`;
+      html += "<h3>Blood Pressure</h3>";
+      d.bloodPressure.forEach((bp,i)=>{
+        html += `<div style="color:${getBPColor(getBPCategory(bp.systolic,bp.diastolic))}">BP #${i+1}: ${bp.systolic}/${bp.diastolic} HR:${bp.heartRate}</div>`;
+      });
+      html += "<h3>Glucose</h3>";
+      d.glucose.forEach(g => html += `<div>${g.value} mmol/L</div>`);
+      html += `<h3>Activity</h3>
+        <div>Walk: ${d.walk} min</div>
+        <div>Treadmill: ${d.treadmill} min</div>
+        <div>Strength: ${d.strength} reps</div>
+        <div>Calories: ${d.calories}</div>
+        <div>Avg HR: ${d.heartRate}</div>`;
+      out.innerHTML = html;
+    }
+
+    // ==== Render BP Trend ====
+    function renderBPTrends(date){
+      const d = dailyLogs[date];
+      if(!d) return;
+
+      const ctx = document.getElementById("trendChart").getContext("2d");
+      if(window.bpChart) window.bpChart.destroy();
+
+      const data = {
+        labels: d.bloodPressure.map((_,i)=>i+1),
+        datasets: [{
+          label: 'Systolic',
+          data: d.bloodPressure.map(bp=>bp.systolic),
+          borderColor: 'red',
+          fill: false
+        },{
+          label: 'Diastolic',
+          data: d.bloodPressure.map(bp=>bp.diastolic),
+          borderColor: 'blue',
+          fill: false
+        }]
+      };
+
+      window.bpChart = new Chart(ctx, { type:'line', data, options:{ responsive:true }});
+    }
+
+    // ==== Init ====
+    const today = "2025-12-31";
+    const picker = document.getElementById("datePicker");
+    picker.value = today;
+    renderDailySummary(today);
+    renderBPTrends(today);
+
+    picker.addEventListener("change", e => {
+      const date = e.target.value;
+      renderDailySummary(date);
+      renderBPTrends(date);
+    });
+  </script>
 </body>
 </html>

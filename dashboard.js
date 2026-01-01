@@ -1,3 +1,5 @@
+import { dailyLogs } from "./data/dailyLogs.js";
+import { getTotalWalkMinutes } from "./helpers.js";
 console.log("Daily logs loaded:", dailyLogs);
 import { dailyLogs } from "./data/dailyLogs.js";
 

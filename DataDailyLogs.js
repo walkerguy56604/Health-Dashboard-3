@@ -1407,3 +1407,159 @@ export const dailyLogs = {
   glucose: [],
   walk:0, treadmill:0, strength:0, calories:0, heartRate:0
 },
+// =======================
+// May 2–5, 2025
+// =======================
+"2025-05-02": {
+  bloodPressure: [
+    { systolic: 133, diastolic: 68, heartRate: 81 },
+    { systolic: 131, diastolic: 70, heartRate: 90 },
+    { systolic: 70, diastolic: 80, heartRate: 0 } // last entry seems incomplete, marking HR as 0
+  ],
+  glucose: [],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},
+"2025-05-03": {
+  bloodPressure: [],
+  glucose: [{ value: 6.5 }],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},
+"2025-05-04": {
+  bloodPressure: [
+    { systolic: 132, diastolic: 62, heartRate: 74 }
+  ],
+  glucose: [],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},
+"2025-05-05": {
+  bloodPressure: [
+    { systolic: 143, diastolic: 69, heartRate: 80 },
+    { systolic: 130, diastolic: 78, heartRate: 80, note: "IHB" }
+  ],
+  glucose: [{ value: 7 }],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},
+// =======================
+// May 6–14, 2025
+// =======================
+"2025-05-06": {
+  bloodPressure: [],
+  glucose: [],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},
+"2025-05-07": {
+  bloodPressure: [
+    { systolic: 124, diastolic: 56, heartRate: 79 }
+  ],
+  glucose: [],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},
+"2025-05-09": {
+  bloodPressure: [
+    { systolic: 129, diastolic: 64, heartRate: 78 },
+    { systolic: 125, diastolic: 64, heartRate: 79 }
+  ],
+  glucose: [{ value: 7.2 }],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},
+"2025-05-11": {
+  bloodPressure: [
+    { systolic: 114, diastolic: 63, heartRate: 75, note: "IHB" }
+  ],
+  glucose: [],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},
+"2025-05-12": {
+  bloodPressure: [
+    { systolic: 122, diastolic: 70, heartRate: 71 },
+    { systolic: 120, diastolic: 63, heartRate: 69 }
+  ],
+  glucose: [{ value: 5.2 }],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},
+"2025-05-14": {
+  bloodPressure: [
+    { systolic: 123, diastolic: 71, heartRate: 76 }
+  ],
+  glucose: [],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},
+// =======================
+// May 15–23, 2025
+// =======================
+"2025-05-15": {
+  bloodPressure: [],
+  glucose: [],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},
+"2025-05-16": {
+  bloodPressure: [
+    { systolic: 121, diastolic: 63, heartRate: 74 },
+    { systolic: 124, diastolic: 65, heartRate: 73 }
+  ],
+  glucose: [{ value: 5.5 }],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},
+"2025-05-18": {
+  bloodPressure: [
+    { systolic: 127, diastolic: 71, heartRate: 75 }
+  ],
+  glucose: [],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},
+"2025-05-19": {
+  bloodPressure: [
+    { systolic: 129, diastolic: 69, heartRate: 82 },
+    { systolic: 129, diastolic: 65, heartRate: 77 }
+  ],
+  glucose: [{ value: 5.8 }],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},
+"2025-05-21": {
+  bloodPressure: [
+    { systolic: 109, diastolic: 58, heartRate: 76 }
+  ],
+  glucose: [],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},
+"2025-05-23": {
+  bloodPressure: [
+    { systolic: 120, diastolic: 64, heartRate: 70 },
+    { systolic: 121, diastolic: 65, heartRate: 69 }
+  ],
+  glucose: [{ value: 5.4 }],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},
+// =======================
+// May 25–30, 2025
+// =======================
+"2025-05-25": {
+  bloodPressure: [
+    { systolic: 125, diastolic: 68, heartRate: 73 }
+  ],
+  glucose: [],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},
+"2025-05-26": {
+  bloodPressure: [
+    { systolic: 128, diastolic: 68, heartRate: 74 },
+    { systolic: 128, diastolic: 68, heartRate: 73 }
+  ],
+  glucose: [{ value: 6.7 }],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},
+"2025-05-28": {
+  bloodPressure: [
+    { systolic: 127, diastolic: 63, heartRate: 75 }
+  ],
+  glucose: [],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},
+"2025-05-30": {
+  bloodPressure: [
+    { systolic: 130, diastolic: 61, heartRate: 71 },
+    { systolic: 125, diastolic: 64, heartRate: 71 }
+  ],
+  glucose: [{ value: 5.7 }],
+  walk:0, treadmill:0, strength:0, calories:0, heartRate:0
+},

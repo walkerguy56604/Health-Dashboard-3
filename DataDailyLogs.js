@@ -1957,3 +1957,611 @@ export const dailyLogs = {
     calories: 0,
     heartRate: 0
   },
+"2025-08-09": {
+  bloodPressure: [
+    { systolic: 124, diastolic: 64, heartRate: 83, note: "IHB" }
+  ],
+  glucose: [{ value: 5.4 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-08-10": {
+  bloodPressure: [
+    { systolic: 124, diastolic: 71, heartRate: 0 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-08-11": {
+  bloodPressure: [
+    { systolic: 140, diastolic: 71, heartRate: 86 },
+    { systolic: 124, diastolic: 74, heartRate: 86 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-08-15": {
+  bloodPressure: [
+    { systolic: 115, diastolic: 60, heartRate: 79 },
+    { systolic: 109, diastolic: 49, heartRate: 75, note: "IHB" }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-08-17": {
+  bloodPressure: [
+    { systolic: 112, diastolic: 60, heartRate: 91 }
+  ],
+  glucose: [{ value: 7.9 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-08-18": {
+  bloodPressure: [
+    { systolic: 129, diastolic: 69, heartRate: 86, note: "IHB" },
+    { systolic: 121, diastolic: 66, heartRate: 80 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-08-20": {
+  bloodPressure: [
+    { systolic: 127, diastolic: 71, heartRate: 79 },
+    { systolic: 123, diastolic: 72, heartRate: 76 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+}
+"2025-08-22": {
+  bloodPressure: [
+    { systolic: 145, diastolic: 65, heartRate: 77 },
+    { systolic: 130, diastolic: 62, heartRate: 74 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-08-25": {
+  bloodPressure: [
+    { systolic: 126, diastolic: 70, heartRate: 73 },
+    { systolic: 124, diastolic: 67, heartRate: 73 }
+  ],
+  glucose: [{ value: 6.6 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-08-27": {
+  bloodPressure: [
+    { systolic: 128, diastolic: 66, heartRate: 76 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-08-29": {
+  bloodPressure: [
+    { systolic: 139, diastolic: 72, heartRate: 83 },
+    { systolic: 129, diastolic: 61, heartRate: 79 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-08-31": {
+  bloodPressure: [
+    { systolic: 130, diastolic: 63, heartRate: 75 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+}
+"2025-09-01": {
+  bloodPressure: [
+    { systolic: 140, diastolic: null, heartRate: 67 }, // IHB, diastolic uncertain
+    { systolic: 128, diastolic: 73, heartRate: 69 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-09-03": {
+  bloodPressure: [
+    { systolic: 124, diastolic: 67, heartRate: 80 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-09-05": {
+  bloodPressure: [
+    { systolic: 138, diastolic: 74, heartRate: 78 },
+    { systolic: 135, diastolic: 76, heartRate: 75 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-09-07": {
+  bloodPressure: [
+    { systolic: 153, diastolic: 73, heartRate: 91 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-09-08": {
+  bloodPressure: [
+    { systolic: 129, diastolic: 67, heartRate: 82 },
+    { systolic: 130, diastolic: 82, heartRate: 87 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+}
+"2025-09-18": {
+  bloodPressure: [],
+  glucose: [{ value: 6.5 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-09-20": {
+  bloodPressure: [],
+  glucose: [{ value: 6.5 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-09-21": {
+  bloodPressure: [
+    { systolic: 128, diastolic: 66, heartRate: 83 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-09-22": {
+  bloodPressure: [
+    { systolic: 136, diastolic: 64, heartRate: 79 },
+    { systolic: 129, diastolic: 64, heartRate: 82 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0,
+  steps: [86, 75]  // Adding steps here
+},
+"2025-09-26": {
+  bloodPressure: [
+    { systolic: 107, diastolic: 71, heartRate: 78, IHB: true },
+    { systolic: 122, diastolic: 65, heartRate: 74 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0,
+  steps: [8500]
+},
+"2025-09-27": {
+  bloodPressure: [],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0,
+  steps: [6750]
+},
+"2025-09-28": {
+  bloodPressure: [
+    { systolic: 167, diastolic: 74, heartRate: 79 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0,
+  steps: [7067, 50]  // Adding steps
+},
+"2025-09-29": {
+  bloodPressure: [
+    { systolic: 138, diastolic: 73, heartRate: 80 },
+    { systolic: 140, diastolic: 69, heartRate: 79 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0,
+  steps: [6400]
+}
+"2025-10-01": {
+  bloodPressure: [
+    { systolic: 120, diastolic: 65, heartRate: 81, IHB: true }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0,
+  steps: [7500]
+},
+"2025-10-03": {
+  bloodPressure: [
+    { systolic: 129, diastolic: 63, heartRate: 87 },
+    { systolic: 118, diastolic: 65, heartRate: 85 }
+  ],
+  glucose: [{ value: 6.6 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0,
+  steps: [7520]
+},
+"2025-10-05": {
+  bloodPressure: [
+    { systolic: 116, diastolic: 54, heartRate: 78, IHB: true }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0,
+  steps: [6284]
+},
+"2025-10-06": {
+  bloodPressure: [
+    { systolic: 124, diastolic: 62, heartRate: 79 },
+    { systolic: 130, diastolic: 70, heartRate: 85 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0,
+  steps: [7500]
+},
+"2025-10-08": {
+  bloodPressure: [
+    { systolic: 124, diastolic: 71, heartRate: 86 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0,
+  steps: [79]
+},
+"2025-10-09": {
+  bloodPressure: [],
+  glucose: [{ value: 6.4 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0,
+  steps: [6480]
+}
+"2025-10-10": {
+  bloodPressure: [
+    { systolic: 132, diastolic: 72, heartRate: 90 },
+    { systolic: 132, diastolic: 72, heartRate: 89 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0,
+  steps: [7580]
+},
+"2025-10-12": {
+  bloodPressure: [
+    { systolic: 120, diastolic: 63, heartRate: 91 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0,
+  steps: [8250]
+},
+"2025-10-13": {
+  bloodPressure: [
+    { systolic: 116, diastolic: 67, heartRate: 96 },
+    { systolic: 120, diastolic: 66, heartRate: 98 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0,
+  steps: [7850]
+},
+"2025-10-15": {
+  bloodPressure: [
+    { systolic: 119, diastolic: 64, heartRate: 87 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0,
+  steps: [8000]
+},
+"2025-10-16": {
+  bloodPressure: [],
+  glucose: [{ value: 7.4 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0,
+  steps: []
+}
+"2025-10-17": {
+  bloodPressure: [
+    { systolic: 120, diastolic: 64, heartRate: 76 },
+    { systolic: 119, diastolic: 62, heartRate: 73 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-10-19": {
+  bloodPressure: [
+    { systolic: 125, diastolic: 65, heartRate: 71 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-10-20": {
+  bloodPressure: [
+    { systolic: 119, diastolic: 61, heartRate: 71 },
+    { systolic: 120, diastolic: 65, heartRate: 70 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-10-22": {
+  bloodPressure: [
+    { systolic: 108, diastolic: 63, heartRate: 77 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-10-24": {
+  bloodPressure: [
+    { systolic: 131, diastolic: 47, heartRate: 75 },
+    { systolic: 128, diastolic: 66, heartRate: 70 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-10-26": {
+  bloodPressure: [
+    { systolic: 133, diastolic: 71, heartRate: 82 }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-10-27": {
+  bloodPressure: [
+    { systolic: 127, diastolic: 66, heartRate: 79 },
+    { systolic: 131, diastolic: 70, heartRate: 86 }
+  ],
+  glucose: [{ value: 7.4 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-10-29": {
+  bloodPressure: [
+    { systolic: 102, diastolic: 62, heartRate: 75, IHB: true, hypertension: "Low" }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-10-31": {
+  bloodPressure: [
+    { systolic: 129, diastolic: 73, heartRate: 77, hypertension: "Low" },
+    { systolic: 128, diastolic: 70, heartRate: 76, hypertension: "Low" }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+}
+"2025-11-02": {
+  bloodPressure: [
+    { systolic: 131, diastolic: 65, heartRate: 85, hypertension: "Medium" }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-11-03": {
+  bloodPressure: [
+    { systolic: 116, diastolic: 61, heartRate: 75, hypertension: "Medium" },
+    { systolic: 120, diastolic: 62, heartRate: 76, hypertension: "Medium" }
+  ],
+  glucose: [{ value: 5.5 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-11-05": {
+  bloodPressure: [
+    { systolic: 124, diastolic: 63, heartRate: 76, hypertension: "Low" }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-11-06": {
+  bloodPressure: [
+    { systolic: 124, diastolic: 68, heartRate: 95, hypertension: "Medium" }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-11-07": {
+  bloodPressure: [
+    { systolic: 124, diastolic: 67, heartRate: 88, hypertension: "Medium" },
+    { systolic: 119, diastolic: 66, heartRate: 88, hypertension: "Low" },
+    { systolic: 120, diastolic: 69, heartRate: 94, hypertension: "Medium" }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-11-09": {
+  bloodPressure: [
+    { systolic: 133, diastolic: 66, heartRate: 81, hypertension: "Medium" },
+    { systolic: 122, diastolic: 71, heartRate: 96, hypertension: "Low" }
+  ],
+  glucose: [{ value: 6.5 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-11-10": {
+  bloodPressure: [
+    { systolic: 128, diastolic: 70, heartRate: 88, hypertension: "Low" },
+    { systolic: 132, diastolic: 72, heartRate: 89, hypertension: "Medium" }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+}
+"2025-11-12": {
+  bloodPressure: [
+    { systolic: 126, diastolic: 68, heartRate: 86, hypertension: "Low" }
+  ],
+  glucose: [{ value: 7.7 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-11-14": {
+  bloodPressure: [
+    { systolic: 121, diastolic: 65, heartRate: 88, hypertension: "Low" },
+    { systolic: 122, diastolic: 70, heartRate: 81, hypertension: "Low" }
+  ],
+  glucose: [{ value: 7 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-11-17": {
+  bloodPressure: [
+    { systolic: 116, diastolic: 65, heartRate: 84, hypertension: "Low" },
+    { systolic: 120, diastolic: 67, heartRate: 84, hypertension: "Medium" }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-11-19": {
+  bloodPressure: [
+    { systolic: 124, diastolic: 65, heartRate: 87, hypertension: "Low" }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-11-21": {
+  bloodPressure: [
+    { systolic: 124, diastolic: 66, heartRate: 84, hypertension: "Medium" },
+    { systolic: 122, diastolic: 67, heartRate: 76, hypertension: "Medium" }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-11-24": {
+  bloodPressure: [
+    { systolic: 124, diastolic: 67, heartRate: 77, hypertension: "Medium" },
+    { systolic: 127, diastolic: 64, heartRate: 77, hypertension: "Medium" }
+  ],
+  glucose: [{ value: 6.1 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-11-26": {
+  bloodPressure: [
+    { systolic: 119, diastolic: 66, heartRate: 77, hypertension: "Low" }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-11-28": {
+  bloodPressure: [
+    { systolic: 120, diastolic: 67, heartRate: 83, hypertension: "Low" },
+    { systolic: 130, diastolic: 78, heartRate: 83, hypertension: "High" }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-11-30": {
+  bloodPressure: [
+    { systolic: 123, diastolic: 67, heartRate: 77, hypertension: "Medium" }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+}
+"2025-12-10": {
+  bloodPressure: [
+    { systolic: 124, diastolic: 64, heartRate: 91, hypertension: "Medium" },
+    { systolic: 125, diastolic: 62, heartRate: 91, hypertension: "Medium" }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-12-12": {
+  bloodPressure: [
+    { systolic: 127, diastolic: 63, heartRate: 76, hypertension: "Medium" },
+    { systolic: 114, diastolic: 55, heartRate: 80, hypertension: "Low" }
+  ],
+  glucose: [{ value: 8.4 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-12-15": {
+  bloodPressure: [
+    { systolic: 130, diastolic: 68, heartRate: 89, hypertension: "Medium" },
+    { systolic: 135, diastolic: 68, heartRate: 87, hypertension: "Medium" }
+  ],
+  glucose: [{ value: 7.4 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-12-17": {
+  bloodPressure: [
+    { systolic: 132, diastolic: 68, heartRate: 86, hypertension: "Medium" }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-12-19": {
+  bloodPressure: [
+    { systolic: 120, diastolic: 63, heartRate: 85, hypertension: "Medium" },
+    { systolic: 116, diastolic: 68, heartRate: 85, hypertension: "Low", IHB: true },
+    { systolic: 118, diastolic: 71, heartRate: 87, hypertension: "Low" }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-12-21": {
+  bloodPressure: [
+    { systolic: 128, diastolic: 69, heartRate: 84, hypertension: "Medium" }
+  ],
+  glucose: [{ value: 7.9 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-12-22": {
+  bloodPressure: [
+    { systolic: 123, diastolic: 65, heartRate: 82, hypertension: "Medium" },
+    { systolic: 122, diastolic: 60, heartRate: 81, hypertension: "Medium" }
+  ],
+  glucose: [{ value: 7.2 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+}
+"2025-12-23": {
+  bloodPressure: [],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-12-24": {
+  bloodPressure: [
+    { systolic: 123, diastolic: 62, heartRate: 79, hypertension: "Medium" }
+  ],
+  glucose: [{ value: 5.8 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-12-27": {
+  bloodPressure: [
+    { systolic: 124, diastolic: 66, heartRate: 80, hypertension: "Medium" },
+    { systolic: 117, diastolic: 66, heartRate: 81, hypertension: "Low" }
+  ],
+  glucose: [{ value: 4.4 }],
+  walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0
+},
+"2025-12-28": {
+  bloodPressure: [
+    { systolic: 121, diastolic: 69, heartRate: 85, hypertension: "Medium", IHB: true },
+    { systolic: 133, diastolic: 71, heartRate: 88, hypertension: "High" },
+    { systolic: 129, diastolic: 74, heartRate: 89, hypertension: "Medium" },
+    { systolic: 136, diastolic: 70, heartRate: 94, hypertension: "High" },
+    { systolic: 121, diastolic: 73, heartRate: 96, hypertension: "Medium" },
+    { systolic: 114, diastolic: 59, heartRate: 94, hypertension: "Low" },
+    { systolic: 135, diastolic: 70, heartRate: 94, hypertension: "High" },
+    { systolic: 120, diastolic: 63, heartRate: 95, hypertension: "Medium" }
+  ],
+  glucose: [],
+  walk: 30, treadmill: 0, strength: 30, calories: 0, heartRate: 0
+},
+"2025-12-29": {
+  bloodPressure: [
+    { systolic: 129, diastolic: 73, heartRate: 84, hypertension: "Medium" },
+    { systolic: 127, diastolic: 70, heartRate: 84, hypertension: "Medium" },
+    { systolic: 122, diastolic: 74, heartRate: 89, hypertension: "Medium" },
+    { systolic: 128, diastolic: 67, heartRate: 94, hypertension: "Medium", IHB: true },
+    { systolic: 130, diastolic: 71, heartRate: 94, hypertension: "High" },
+    { systolic: 128, diastolic: 76, heartRate: 94, hypertension: "Medium" },
+    { systolic: 122, diastolic: 67, heartRate: 90, hypertension: "Medium" }
+  ],
+  glucose: [],
+  walk: 30, treadmill: 0, strength: 45, calories: 0, heartRate: 0
+},
+"2025-12-30": {
+  bloodPressure: [
+    { systolic: 141, diastolic: 74, heartRate: 89, hypertension: "High" },
+    { systolic: 127, diastolic: 67, heartRate: 92, hypertension: "Medium" }
+  ],
+  glucose: [],
+  walk: 0, treadmill: 0, strength: 30, calories: 0, heartRate: 0
+},
+"2025-12-31": {
+  bloodPressure: [
+    { systolic: 130, diastolic: 69, heartRate: 80, hypertension: "Medium" },
+    { systolic: 121, diastolic: 67, heartRate: 80, hypertension: "Medium" }
+  ],
+  glucose: [{ value: 5.4 }],
+  walk: 0, treadmill: 0, strength: 30, calories: 0, heartRate: 0
+}
+"2026-01-01": {
+  bloodPressure: [
+    { systolic: 117, diastolic: 69, heartRate: 88, time: "08:55", event: "Strength Training", hypertension: "L" },
+    { systolic: 135, diastolic: 71, heartRate: 88, time: "10:50", event: "Treadmill", hypertension: "H" },
+    { systolic: 126, diastolic: 63, heartRate: 92, time: "12:05", event: "Strength Training", hypertension: "M" },
+    { systolic: 132, diastolic: 74, heartRate: 89, time: "16:05", event: "Strength Training", hypertension: "H" },
+    { systolic: 128, diastolic: 71, heartRate: 93, time: "17:30", event: "Treadmill", hypertension: "M" },
+    { systolic: 129, diastolic: 76, heartRate: 88, time: "20:00", event: "Strength Training", hypertension: "M" }
+  ],
+  walk: [
+    { start: "08:30", end: "08:35" },
+    { start: "09:25", end: "09:30" },
+    { start: "09:55", end: "10:00" }
+  ],
+  treadmill: [
+    { start: "10:35", end: "10:45", speed: 1.4, distance: 0.24, avgHR: 111, maxHR: 182, calories: 11 },
+    { start: "17:15", end: "17:25", speed: 1.4, distance: 0.24, avgHR: 103, maxHR: 111, calories: 11 }
+  ],
+  strength: [
+    { start: "08:55", end: "09:09" },
+    { start: "11:46", end: "12:00" },
+    { start: "16:00", end: "16:??" }, // you can fill exact end time if you want
+    { start: "20:00", end: "??:??" }  // optional, fill later
+  ]
+}

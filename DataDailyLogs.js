@@ -1880,3 +1880,18 @@ export const dailyLogs = {
   calories: 0,
   heartRate: 0
 }
+"2026-01-01": {
+  bloodPressure: [
+    { systolic: 117, diastolic: 69, heartRate: 88, note: "Early morning, low hypertension" },
+    { systolic: 135, diastolic: 71, heartRate: 88, note: "5 min after treadmill, high hypertension" },
+    { systolic: 128, diastolic: 71, heartRate: 93, note: "5 min after afternoon treadmill, medium hypertension" }
+  ],
+  glucose: [
+    { value: 6.4, note: "Early morning test" }
+  ],
+  walk: 45,        // Siri + non-Siri walks combined
+  treadmill: 20,   // Total treadmill minutes (AM + PM)
+  strength: 14,    // Total strength training minutes
+  calories: 22,    // Total calories from treadmill + strength
+  heartRate: 88    // Average heart rate (can be adjusted if you want)
+}

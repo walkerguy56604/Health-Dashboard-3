@@ -1,30 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Health Dashboard</title>
-  <style>
-    body { font-family: sans-serif; margin: 20px; }
-    h3, h4 { margin-bottom: 5px; }
-    div { margin-bottom: 5px; }
-    button { margin: 2px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health Dashboard</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; }
+  h1 { text-align: center; }
+  table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+  th, td { border: 1px solid #000; padding: 6px; text-align: center; }
+  th { background-color: #f0f0f0; }
+  #historyList button { margin: 2px; padding: 4px 6px; }
+  #dailySummaryOutput div { margin-bottom: 4px; }
+</style>
 </head>
 <body>
 
-  <h1>Health Dashboard</h1>
+<h1>Health Dashboard</h1>
 
-  <label for="datePicker">Select Date: </label>
+<div>
+  <label for="datePicker">Select Date:</label>
   <input type="date" id="datePicker">
+</div>
 
-  <div id="historyList"></div>
-  <div id="dailySummaryOutput"></div>
-  <canvas id="trendChart" width="600" height="200"></canvas>
+<div id="dailySummaryOutput"></div>
 
-  <div id="exportContainer"></div>
+<h2>History</h2>
+<div id="historyList"></div>
 
-  <!-- Your main JavaScript file -->
-  <script type="module" src="main.js"></script>
+<h2>Trends (Optional)</h2>
+<div id="trendContainer">
+  <canvas id="trendChart"></canvas>
+</div>
+
+<div id="exportContainer"></div>
+
+<!-- Chart.js CDN for future trends -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Dashboard Script -->
+<script type="module" src="dashboard.js"></script>
+
 </body>
 </html>

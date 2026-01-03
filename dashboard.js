@@ -1,31 +1,24 @@
-console.log("✅ dashboard.js loaded");
+const datePicker = document.getElementById("datePicker");
 
-const dailyLogs = {
-  "2026-01-02": {
-    walk: 0,
-    treadmill: 2,
-    strength: 29,
-    calories: 22,
-    heartRate: 92
-  },
-  "2026-01-03": {
-    walk: 5,
-    treadmill: 0,
-    strength: 0,
-    calories: 0,
-    heartRate: null
-  }
-};
+datePicker.value = "2026-01-03";
 
-document.addEventListener("DOMContentLoaded", () => {
+datePicker.addEventListener("change", (e) => {
+  const selectedDate = e.target.value;
   const out = document.getElementById("dailySummaryOutput");
 
+  if (!dailyLogs[selectedDate]) {
+    out.innerHTML = `<h3>${selectedDate}</h3><div>No data for this day</div>`;
+    return;
+  }
+
+  const d = dailyLogs[selectedDate];
+
   out.innerHTML = `
-    <h3>2026-01-03</h3>
-    <div>Walk: ${dailyLogs["2026-01-03"].walk} min</div>
-    <div>Treadmill: ${dailyLogs["2026-01-03"].treadmill}</div>
-    <div>Strength: ${dailyLogs["2026-01-03"].strength}</div>
-    <div>Calories: ${dailyLogs["2026-01-03"].calories}</div>
-    <div>Avg HR: ${dailyLogs["2026-01-03"].heartRate ?? "—"}</div>
+    <h3>${selectedDate}</h3>
+    <div>Walk: ${d.walk}</div>
+    <div>Treadmill: ${d.treadmill}</div>
+    <div>Strength: ${d.strength}</div>
+    <div>Calories: ${d.calories}</div>
+    <div>Avg HR: ${d.heartRate ?? "—"}</div>
   `;
 });

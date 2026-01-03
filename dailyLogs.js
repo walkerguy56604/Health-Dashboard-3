@@ -1,16 +1,61 @@
-"2026-01-02": {
-  bloodPressure: [
-    { systolic: 127, diastolic: 57, heartRate: 91, note: "Strength AM" },
-    { systolic: 138, diastolic: 71, heartRate: 87, note: "Friday check 1" },
-    { systolic: 140, diastolic: 68, heartRate: 85, note: "Friday check 2 High" },
-    { systolic: 128, diastolic: 72, heartRate: 97, note: "Post treadmill AM" },
-    { systolic: 136, diastolic: 67, heartRate: 93, note: "Strength PM" },
-    { systolic: 116, diastolic: 64, heartRate: 92, note: "Post treadmill PM" }
-  ],
-  glucose: [],
-  walk: 10,         // total walks: 6:30 + 6:55
-  treadmill: 0.48,  // total distance (0.24 + 0.24)
-  strength: 30,     // total reps: 15 AM + 15 PM
-  calories: 22,     // total treadmill calories (11 + 11)
-  heartRate: 118    // last treadmill average HR
-},
+export const dailyLogs = {
+  "2026-01-02": {
+    bloodPressure: [
+      { systolic: 127, diastolic: 57, heartRate: 91, note: "Post AM strength – low hypertension" },
+      { systolic: 128, diastolic: 72, heartRate: 97, note: "Post treadmill" },
+      { systolic: 136, diastolic: 67, heartRate: 93, note: "Post PM strength – high hypertension (expected)" },
+      { systolic: 116, diastolic: 64, heartRate: 92, note: "Post PM treadmill – low hypertension" }
+    ],
+    strength: 29,
+    strengthDetails: [
+      {
+        time: "07:48–08:03",
+        duration: 15,
+        exercises: "3x10 lateral raises, 3x10 biceps",
+        restAfter: 5
+      },
+      {
+        time: "16:06–16:20",
+        duration: 14,
+        exercises: "3x10 lateral raises, 3x10 biceps",
+        restAfter: 5
+      }
+    ],
+    treadmill: [
+      {
+        time: "12:25–12:35",
+        speed: 1.4,
+        distance: 0.24,
+        calories: 11,
+        avgHR: 108,
+        maxHR: 151
+      },
+      {
+        time: "Evening",
+        speed: 1.4,
+        distance: 0.24,
+        calories: 11,
+        avgHR: 118,
+        maxHR: 123
+      }
+    ],
+    walk: 0,
+    glucose: [],
+    calories: 22,
+    heartRate: 92
+  },
+
+  "2026-01-03": {
+    bloodPressure: [],
+    glucose: [],
+    walk: 5, // 5-minute morning walk
+    treadmill: 0,
+    strength: 0,
+    strengthDetails: [],
+    calories: 0,
+    heartRate: null,
+    notes: [
+      "Morning 5-minute walk, 08:35–08:40, non-Siri"
+    ]
+  }
+};

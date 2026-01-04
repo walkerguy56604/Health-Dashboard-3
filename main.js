@@ -1,7 +1,7 @@
 // =======================
 // Import Daily Logs
 // =======================
-import { dailyLogs } from './dailylogs.js'; // Make sure path matches your setup
+import { dailyLogs } from './dailylogs.js';
 
 // =======================
 // Helpers
@@ -19,8 +19,8 @@ function getRollingWindow(date, days = 7) {
     return allDates.slice(Math.max(0, idx - (days-1)), idx + 1);
 }
 
-function calculate7DayRolling(date) {
-    const windowDates = getRollingWindow(date, 7);
+function calculateRolling(date, days = 7) {
+    const windowDates = getRollingWindow(date, days);
     const sums = { sys:0, dia:0, bpCount:0, walk:0, treadmill:0, strength:0, calories:0, heartRate:0, hrCount:0 };
 
     windowDates.forEach(d => {
@@ -41,7 +41,8 @@ function calculate7DayRolling(date) {
         treadmill: sums.treadmill,
         strength: sums.strength,
         calories: sums.calories,
-        heartRate: sums.hrCount ? (sums.heartRate / sums.hrCount).toFixed(0) : "—"
+        heartRate: sums.hrCount ? (sums.heartRate / sums.hrCount).toFixed(0) : "—",
+        dates: windowDates
     };
 }
 
@@ -51,6 +52,8 @@ function calculate7DayRolling(date) {
 export function renderDailySummary(date) {
     const out = document.getElementById("dailySummaryOutput");
     const bpFilter = document.getElementById("bpFilter")?.value || "all";
+    const rollingDays = parseInt(document.querySelector('input[name="rollingDays"]:checked')?.value) || 7;
+
     const d = dailyLogs[date];
     if (!d) { out.innerHTML = `<p>No data for ${date}</p>`; return; }
 
@@ -81,8 +84,8 @@ export function renderDailySummary(date) {
         d.notes.forEach(note => html += `<p>• ${note}</p>`);
     }
 
-    const r = calculate7DayRolling(date);
-    html += `<div class="category">7-Day Rolling Averages</div>
+    const r = calculateRolling(date, rollingDays);
+    html += `<div class="category">${rollingDays}-Day Rolling Averages</div>
     <p>BP: ${r.bpSys}/${r.bpDia}</p>
     <p>Walk: ${r.walk}</p>
     <p>Treadmill: ${r.treadmill}</p>
@@ -94,17 +97,17 @@ export function renderDailySummary(date) {
 
     out.innerHTML = html;
 
-    drawRollingChart(date);
+    drawRollingChart(date, rollingDays);
 }
 
 // =======================
 // Draw Rolling Chart
 // =======================
-function drawRollingChart(date) {
+function drawRollingChart(date, days = 7) {
     const canvas = document.getElementById("rollingChart");
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
-    const windowDates = getRollingWindow(date, 7);
+    const windowDates = getRollingWindow(date, days);
 
     const sysData = [], diaData = [], walkData = [], strengthData = [];
     windowDates.forEach(d => {
@@ -142,7 +145,7 @@ function drawRollingChart(date) {
 }
 
 // =======================
-// Initialize Date Picker & Filter
+// Initialize Date Picker & Filters
 // =======================
 const datePicker = document.getElementById("datePicker");
 const bpFilter = document.getElementById("bpFilter");
@@ -158,6 +161,9 @@ Object.keys(dailyLogs).sort().forEach(date => {
 // Render summary when date or filter changes
 datePicker.addEventListener("change", () => renderDailySummary(datePicker.value));
 bpFilter.addEventListener("change", () => renderDailySummary(datePicker.value));
+document.querySelectorAll('input[name="rollingDays"]').forEach(radio => {
+    radio.addEventListener("change", () => renderDailySummary(datePicker.value));
+});
 
 // Render first date by default
 if (datePicker.options.length) renderDailySummary(datePicker.options[0].value);

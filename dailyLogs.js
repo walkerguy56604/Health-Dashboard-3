@@ -60,3 +60,25 @@ export const dailyLogs = {
     ]
   }
 };
+"2026-01-04": {
+  bloodPressure: [
+    { systolic: 132, diastolic: 80, heartRate: 66, note: "Post strength training – after 5-min rest, H" }
+  ],
+  strength: 15,
+  strengthDetails: [
+    {
+      time: "08:45–09:00",
+      duration: 15,
+      exercises: "3x10 lateral raises, 3x10 biceps",
+      restAfter: 5
+    }
+  ],
+  treadmill: [],
+  walk: 5, // Siri Walk
+  glucose: [],
+  calories: null,
+  heartRate: 66,
+  notes: [
+    "Morning Siri walk, 04:10–04:15, 5 minutes"
+  ]
+}

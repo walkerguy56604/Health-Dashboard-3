@@ -45,57 +45,51 @@ function get7DayRolling(date) {
 // =======================
 // Render Daily Summary
 // =======================
-export function renderDailySummary(date, bpFilter = "all") {
+export function renderDailySummary(date) {
     const out = document.getElementById("dailySummaryOutput");
+    const bpFilter = document.getElementById("bpFilter")?.value || "all";
     const d = dailyLogs[date];
     if (!d) { out.innerHTML = `<p>No data for ${date}</p>`; return; }
 
     let html = `<h2>${date}</h2>`;
 
-    // ---- Blood Pressure ----
-    html += `<section class="bp-section"><h3>Blood Pressure</h3>`;
+    html += `<div class="category">Blood Pressure</div>`;
     if (d.bloodPressure.length) {
         d.bloodPressure.forEach((bp, i) => {
             const cat = getBPCategory(bp.systolic, bp.diastolic);
-            if (bpFilter !== "all" && cat !== bpFilter) return; // Apply filter
+            if (bpFilter !== "all" && bpFilter !== cat) return; // Skip if filter doesn't match
             const catText = cat === "H" ? "High" : cat === "M" ? "Medium" : "Low";
-            html += `<p>BP #${i+1}: ${bp.systolic}/${bp.diastolic} HR:${bp.heartRate || "—"} (${catText})${bp.note ? " – " + bp.note : ""}</p>`;
+            html += `<p>BP #${i+1}: ${bp.systolic}/${bp.diastolic} HR:${bp.heartRate} (${catText})${bp.note ? " – " + bp.note : ""}</p>`;
         });
+        if (!html.includes("BP #")) html += `<p>No BP recorded for selected filter</p>`;
     } else html += `<p>No BP recorded</p>`;
-    html += `</section>`;
 
-    // ---- Activity ----
-    html += `<section class="activity-section"><h3>Activity</h3>
-        <p>Walk: ${d.walk || 0} min</p>
-        <p>Treadmill: ${Array.isArray(d.treadmill) && d.treadmill.length ? d.treadmill.map(t => `${t.distance} km (${t.calories} cal)`).join(", ") : "No treadmill activity"}</p>
-        <p>Strength: ${d.strength || 0} min</p>
-        <p>Calories: ${d.calories || 0}</p>
-        <p>Avg HR: ${d.heartRate != null ? d.heartRate : "—"}</p>
-    </section>`;
+    html += `<div class="category">Activity</div>
+    <p>Walk: ${d.walk || 0} min</p>
+    <p>Treadmill: ${Array.isArray(d.treadmill) && d.treadmill.length ? d.treadmill.map(t => `${t.distance} km (${t.calories} cal)`).join(", ") : 0}</p>
+    <p>Strength: ${d.strength || 0} min</p>
+    <p>Calories: ${d.calories || 0}</p>
+    <p>Avg HR: ${d.heartRate != null ? d.heartRate : "—"}</p>`;
 
-    // ---- Notes ----
     if (d.notes && d.notes.length) {
-        html += `<section class="notes-section"><h3>Notes</h3>`;
+        html += `<div class="category">Notes</div>`;
         d.notes.forEach(note => html += `<p>• ${note}</p>`);
-        html += `</section>`;
     }
 
-    // ---- 7-Day Rolling Averages ----
-    const r = get7DayRolling(date) || {};
-    html += `<section class="rolling-section"><h3>7-Day Rolling Averages</h3>
-        <p>BP: ${r.bpSys}/${r.bpDia}</p>
-        <p>Walk: ${r.walk}</p>
-        <p>Treadmill: ${r.treadmill}</p>
-        <p>Strength: ${r.strength}</p>
-        <p>Calories: ${r.calories}</p>
-        <p>Avg HR: ${r.heartRate}</p>
-    </section>`;
+    const r = get7DayRolling(date);
+    html += `<div class="category">7-Day Rolling Averages</div>
+    <p>BP: ${r.bpSys}/${r.bpDia}</p>
+    <p>Walk: ${r.walk}</p>
+    <p>Treadmill: ${r.treadmill}</p>
+    <p>Strength: ${r.strength}</p>
+    <p>Calories: ${r.calories}</p>
+    <p>Avg HR: ${r.heartRate}</p>`;
 
     out.innerHTML = html;
 }
 
 // =======================
-// Initialize Date Picker & BP Filter
+// Initialize Date Picker & Filter
 // =======================
 const datePicker = document.getElementById("datePicker");
 const bpFilter = document.getElementById("bpFilter");
@@ -108,15 +102,11 @@ Object.keys(dailyLogs).sort().forEach(date => {
     datePicker.appendChild(option);
 });
 
-// Render summary on date or filter change
-function refreshSummary() {
-    renderDailySummary(datePicker.value, bpFilter.value);
-}
-
-datePicker.addEventListener("change", refreshSummary);
-bpFilter.addEventListener("change", refreshSummary);
+// Render summary when date changes
+datePicker.addEventListener("change", () => renderDailySummary(datePicker.value));
+bpFilter.addEventListener("change", () => renderDailySummary(datePicker.value));
 
 // Render first date by default
-if (datePicker.options.length) refreshSummary();
+if (datePicker.options.length) renderDailySummary(datePicker.options[0].value);
 
 window.renderDailySummary = renderDailySummary;

@@ -26,7 +26,7 @@ function getLastNDates(endDate, n) {
 function get7DayRolling(date) {
   const windowDates = getLastNDates(date, 7);
   let sums = { sys: 0, dia: 0, bpCount: 0, walk: 0, treadmill: 0, strength: 0, calories: 0, heartRate: 0, hrCount: 0 };
-  
+
   windowDates.forEach(d => {
     const day = dailyLogs[d];
     if (!day) return;
@@ -107,11 +107,29 @@ export function renderDailySummary(date) {
 }
 
 // =======================
-// Initialize Dashboard
+// Initialize Dashboard & Date Picker
 // =======================
 window.renderDailySummary = renderDailySummary;
 
-// Optional: render today's summary
-const today = new Date().toISOString().split('T')[0];
-if (!dailyLogs[today]) dailyLogs[today] = { bloodPressure: [], glucose: [], walk:0, treadmill:[], strength:0, calories:0, heartRate:null, notes:[] };
-renderDailySummary(today);
+function populateDatePicker() {
+  const picker = document.getElementById("datePicker");
+  picker.innerHTML = '';
+  const dates = Object.keys(dailyLogs).sort();
+  dates.forEach(date => {
+    const opt = document.createElement("option");
+    opt.value = date;
+    opt.textContent = date;
+    picker.appendChild(opt);
+  });
+
+  // Render first date by default
+  if (dates.length) renderDailySummary(dates[dates.length - 1]);
+}
+
+// Date picker change event
+document.addEventListener("DOMContentLoaded", () => {
+  const picker = document.getElementById("datePicker");
+  if (!picker) return;
+  populateDatePicker();
+  picker.addEventListener("change", e => renderDailySummary(e.target.value));
+});

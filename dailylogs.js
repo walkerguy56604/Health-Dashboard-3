@@ -101,34 +101,34 @@ export const dailyLogs = {
 };
 "2026-01-05": {
   bloodPressure: [
-    // Example: { systolic: 0, diastolic: 0, heartRate: 0, note: "Morning BP" }
+    { systolic: 139, diastolic: 70, heartRate: 84, note: "Post strength training – H" },
+    { systolic: 131, diastolic: 67, heartRate: 85, note: "Post treadmill – H" }
   ],
-  strength: 0,
+  strength: 18,
   strengthDetails: [
-    // Example:
-    // {
-    //   time: "HH:MM–HH:MM",
-    //   duration: 0,
-    //   exercises: "Description",
-    //   restAfter: 0
-    // }
+    {
+      time: "08:00–08:18",
+      duration: 18,
+      exercises: "Strength training (various, with short delays)",
+      restAfter: 5
+    }
   ],
   treadmill: [
-    // Example:
-    // {
-    //   time: "HH:MM–HH:MM",
-    //   speed: 0,
-    //   distance: 0,
-    //   calories: 0,
-    //   avgHR: 0,
-    //   maxHR: 0
-    // }
+    {
+      time: "09:28–09:38",
+      speed: 1.4,
+      distance: 0.24,
+      calories: null, // if you want to add calories, update here
+      avgHR: 138,
+      maxHR: 163
+    }
   ],
-  walk: 0, // minutes
+  walk: 10, // 5 + 5 minutes
   glucose: [],
-  calories: 0,
-  heartRate: null,
+  calories: null, // update later if known
+  heartRate: 85, // most recent HR
   notes: [
-    // Example: "Morning Siri walk, HH:MM–HH:MM, X minutes"
+    "Morning Siri walk, 05:55–06:00, 5 minutes",
+    "Morning non-Siri walk, 07:15–07:20, 5 minutes"
   ]
 }

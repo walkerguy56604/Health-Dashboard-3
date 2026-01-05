@@ -118,14 +118,14 @@ export const dailyLogs = {
       time: "09:28–09:38",
       speed: 1.4,
       distance: 0.24,
-      calories: null, // if you want to add calories, update here
+      calories: 12,
       avgHR: 138,
       maxHR: 163
     }
   ],
   walk: 10, // 5 + 5 minutes
   glucose: [],
-  calories: null, // update later if known
+  calories: 160, // approximate total for treadmill, strength, and walk
   heartRate: 85, // most recent HR
   notes: [
     "Morning Siri walk, 05:55–06:00, 5 minutes",

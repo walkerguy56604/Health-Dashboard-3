@@ -26,7 +26,7 @@ export const dailyLogs = {
     bloodPressure: [],
     glucose: [],
     walk: 5, // 5-minute morning walk
-    treadmill: [], // standardized as array
+    treadmill: [],
     strength: 0,
     strengthDetails: [],
     calories: 0,
@@ -36,14 +36,15 @@ export const dailyLogs = {
 
   "2026-01-04": {
     bloodPressure: [
-      { systolic: 132, diastolic: 80, heartRate: 66, note: "Post strength training – after 5-min rest, H" }
+      { systolic: 132, diastolic: 80, heartRate: 66, note: "Post AM strength training – after 5-min rest, H" }
     ],
-    strength: 15,
+    strength: 30, // 15 min early + 15 min around noon
     strengthDetails: [
-      { time: "08:45–09:00", duration: 15, exercises: "3x10 lateral raises, 3x10 biceps", restAfter: 5 }
+      { time: "08:45–09:00", duration: 15, exercises: "3x10 lateral raises, 3x10 biceps", restAfter: 5 },
+      { time: "11:48–12:03", duration: 15, exercises: "3x10 lateral raises, 3x10 biceps", restAfter: 5 }
     ],
-    treadmill: [],
-    walk: 5, // Siri Walk
+    treadmill: [], // not done yet
+    walk: 5, // Siri walk
     glucose: [],
     calories: null,
     heartRate: 66,

@@ -2,35 +2,25 @@
 // Config
 // =======================
 
-const DATA_URL = "PASTE_YOUR_RAW_JSON_URL_HERE";
+// ⬇️ REPLACE THIS with your RAW GitHub JSON URL
+const DATA_URL = "./dailyLogs.json"; 
+// (use full https://raw.githubusercontent.com/... later if hosted remotely)
 
 let dailyLogs = {};
 
 // =======================
-// Init
+// Load JSON
 // =======================
 
-document.addEventListener("DOMContentLoaded", () => {
-  fetchData();
-});
+async function loadData() {
+  const res = await fetch(DATA_URL);
+  dailyLogs = await res.json();
 
-// =======================
-// Fetch JSON
-// =======================
-
-async function fetchData() {
-  try {
-    const res = await fetch(DATA_URL);
-    dailyLogs = await res.json();
-
-    populateDatePicker();
-  } catch (err) {
-    console.error("Failed to load JSON", err);
-  }
+  populateDatePicker();
 }
 
 // =======================
-// Date Picker
+// Populate Date Picker
 // =======================
 
 function populateDatePicker() {
@@ -50,10 +40,6 @@ function populateDatePicker() {
     picker.value = dates[dates.length - 1];
     render(picker.value);
   }
-
-  picker.addEventListener("change", e => {
-    render(e.target.value);
-  });
 }
 
 // =======================
@@ -61,34 +47,51 @@ function populateDatePicker() {
 // =======================
 
 function render(date) {
-  const out = document.getElementById("output");
+  const out = document.getElementById("dailySummaryOutput");
   const d = dailyLogs[date];
 
   if (!d) {
-    out.innerHTML = `<h3>${date}</h3><div>No data</div>`;
+    out.innerHTML = "<p>No data</p>";
     return;
   }
-
-  const bp = d.bloodPressure?.[0];
 
   out.innerHTML = `
     <h3>${date}</h3>
 
-    <h4>Activity</h4>
-    <div>Walk: ${d.walk ?? 0} min</div>
-    <div>Strength: ${d.strength ?? 0} min</div>
-    <div>Treadmill: ${d.treadmill ?? 0} min</div>
-    <div>Calories: ${d.calories ?? 0}</div>
+    <div><b>Walk:</b> ${d.walk} min</div>
+    <div><b>Strength:</b> ${d.strength} min</div>
+    <div><b>Treadmill:</b> ${d.treadmill} min</div>
+    <div><b>Calories:</b> ${d.calories}</div>
+    <div><b>Heart Rate:</b> ${d.heartRate ?? "—"}</div>
 
-    <h4>Vitals</h4>
-    <div>Heart Rate: ${d.heartRate ?? "—"}</div>
-    <div>Blood Pressure: ${
-      bp ? `${bp.systolic}/${bp.diastolic}` : "—"
-    }</div>
+    <h4>Blood Pressure</h4>
+    ${
+      d.bloodPressure.length
+        ? d.bloodPressure
+            .map(bp => `${bp.systolic}/${bp.diastolic} (HR ${bp.heartRate})`)
+            .join("<br>")
+        : "No BP readings"
+    }
 
     <h4>Notes</h4>
-    <ul>
-      ${(d.notes || []).map(n => `<li>${n}</li>`).join("")}
-    </ul>
+    ${
+      d.notes.length
+        ? d.notes.map(n => `• ${n}`).join("<br>")
+        : "No notes"
+    }
   `;
 }
+
+// =======================
+// Events
+// =======================
+
+document
+  .getElementById("datePicker")
+  .addEventListener("change", e => render(e.target.value));
+
+// =======================
+// Init
+// =======================
+
+loadData();

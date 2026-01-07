@@ -1,1 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
+    h1 { text-align: center; }
+    #dashboard { max-width: 1000px; margin: auto; }
+    canvas { background: #fff; border: 1px solid #ccc; margin-top: 20px; }
+    .logs { margin-top: 20px; }
+    .logs div { margin-bottom: 5px; }
+    .green { color: green; }
+    .red { color: red; }
+    .blue { color: blue; }
+  </style>
+  <!-- Include Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1>Health Dashboard</h1>
+  <div id="dashboard">
+    <label for="dateSelect">Select Date:</label>
+    <select id="dateSelect"></select>
 
+    <canvas id="barChart" width="800" height="400"></canvas>
+    <canvas id="lineChart" width="800" height="400"></canvas>
+
+    <div class="logs" id="logs"></div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

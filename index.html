@@ -1,31 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Health Dashboard</title>
-<style>
-  body { font-family: sans-serif; margin: 20px; }
-  label { font-weight: bold; }
-  select { margin-bottom: 15px; }
-  pre { background: #f2f2f2; padding: 10px; }
-  .category { font-weight: bold; margin-top: 10px; }
-  canvas { max-width: 100%; height: 300px; margin-top: 20px; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Dashboard</title>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { text-align: center; }
+    #dashboard { max-width: 1200px; margin: auto; }
+    canvas { background-color: #f9f9f9; border: 1px solid #ccc; }
+    .metrics { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 15px; }
+    .metric { padding: 10px; border-radius: 5px; min-width: 120px; text-align: center; font-weight: bold; }
+  </style>
 </head>
 <body>
+  <h1>Health Dashboard</h1>
+  <div id="dashboard">
+    <canvas id="healthChart" width="1000" height="400"></canvas>
+    <div class="metrics" id="metricsSummary"></div>
+  </div>
 
-<h1>Health Dashboard</h1>
-
-<label for="datePicker">Select Date:</label>
-<select id="datePicker"></select>
-
-<div id="dailySummaryOutput"></div>
-
-<canvas id="healthChart"></canvas>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="main.js"></script>
-
+  <script src="dailyLogs.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>

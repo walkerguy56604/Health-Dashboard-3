@@ -1,64 +1,87 @@
 async function loadDailyLogs() {
   try {
-    const res = await fetch("dailyLogs.json");
-    const data = await res.json();
-
-    const dateSelect = document.getElementById("dateSelect");
-    dateSelect.innerHTML = "";
-
-    Object.keys(data).sort().reverse().forEach(date => {
-      const option = document.createElement("option");
-      option.value = date;
-      option.textContent = date;
-      dateSelect.appendChild(option);
-    });
-
-    dateSelect.addEventListener("change", () => {
-      renderDay(data[dateSelect.value]);
-    });
-
-    renderDay(data[dateSelect.value]);
+    const response = await fetch('dailyLogs.json');
+    const data = await response.json();
+    return data;
   } catch (err) {
-    console.error("Failed to load daily logs", err);
+    console.error("Failed to load dailyLogs.json", err);
+    return {};
   }
 }
 
-function renderDay(log) {
-  setText("walk", log.walk);
-  setText("strength", log.strength);
-  setText("treadmill", log.treadmill);
-  setText("calories", log.calories);
-  setText("weight", log.weight);
-  setText("glucose", log.glucose);
-  setText("sleep", log.sleep);
-  setText("hrv", log.hrv);
-  setText("mood", log.mood);
-
-  renderBloodPressure(log.bloodPressure);
+function populateDates(dailyLogs) {
+  const select = document.getElementById('dateSelect');
+  select.innerHTML = '';
+  Object.keys(dailyLogs).forEach(date => {
+    const option = document.createElement('option');
+    option.value = date;
+    option.textContent = date;
+    select.appendChild(option);
+  });
 }
 
-function setText(id, value) {
-  document.getElementById(id).textContent =
-    value !== undefined && value !== null ? value : "—";
-}
+function displayDataForDate(dailyLogs, date) {
+  const container = document.getElementById('dashboard');
+  container.innerHTML = '';
 
-function renderBloodPressure(bpArray) {
-  const el = document.getElementById("bp");
-
-  if (!Array.isArray(bpArray) || bpArray.length === 0) {
-    el.textContent = "—";
+  const entry = dailyLogs[date];
+  if (!entry) {
+    container.textContent = 'No data for this date.';
     return;
   }
 
-  el.textContent = bpArray.map(bp => {
-    const sys = bp.systolic ?? bp.sys ?? "—";
-    const dia = bp.diastolic ?? bp.dia ?? "—";
-    const hr  = bp.pulse ?? bp.hr ?? bp.heartRate ?? "";
+  function addLine(label, value, className) {
+    const div = document.createElement('div');
+    div.className = className || '';
+    div.innerHTML = `<span>${label}:</span> ${value !== null ? value : 'N/A'}`;
+    container.appendChild(div);
+  }
 
-    return hr
-      ? `${sys}/${dia} (HR ${hr})`
-      : `${sys}/${dia}`;
-  }).join(" • ");
+  addLine('Walk', entry.walk + ' min', 'walk');
+  addLine('Strength', entry.strength + ' min', 'strength');
+  addLine('Treadmill', entry.treadmill + ' min', 'treadmill');
+  addLine('Calories', entry.calories, 'calories');
+  addLine('Heart Rate', entry.heartRate, 'heartRate');
+  addLine('Weight', entry.weight || 'N/A', 'weight');
+  addLine('Glucose', entry.glucose || 'N/A', 'glucose');
+  addLine('Sleep', entry.sleep || 'N/A', 'sleep');
+  addLine('HRV', entry.hrv || 'N/A', 'hrv');
+  addLine('Mood', entry.mood || 'N/A', 'mood');
+
+  // Blood Pressure
+  if (entry.bloodPressure && entry.bloodPressure.length > 0) {
+    const bpDiv = document.createElement('div');
+    bpDiv.className = 'bp';
+    bpDiv.innerHTML = `<span>Blood Pressure:</span> ` +
+      entry.bloodPressure.map(bp => 
+        `${bp.systolic}/${bp.diastolic} (HR ${bp.heartRate}) • ${bp.note || ''}`
+      ).join(' • ');
+    container.appendChild(bpDiv);
+  } else {
+    addLine('Blood Pressure', 'No readings', 'bp');
+  }
+
+  // Notes
+  if (entry.notes && entry.notes.length > 0) {
+    const notesDiv = document.createElement('div');
+    notesDiv.className = 'notes';
+    notesDiv.innerHTML = `<span>Notes:</span> ${entry.notes.join(' • ')}`;
+    container.appendChild(notesDiv);
+  }
 }
 
-loadDailyLogs();
+async function initDashboard() {
+  const dailyLogs = await loadDailyLogs();
+  populateDates(dailyLogs);
+
+  const select = document.getElementById('dateSelect');
+  select.addEventListener('change', () => {
+    displayDataForDate(dailyLogs, select.value);
+  });
+
+  // Display first date by default
+  const firstDate = select.options[0]?.value;
+  if (firstDate) displayDataForDate(dailyLogs, firstDate);
+}
+
+initDashboard();

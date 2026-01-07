@@ -87,3 +87,44 @@
     "heartRate": 0
   }
 }
+{
+  "2024-12-28": {
+    "bloodPressure": [],
+    "glucose": [{ "value": 8.8 }],
+    "walk": 0,
+    "treadmill": 0,
+    "strength": 0,
+    "calories": 0,
+    "heartRate": 0
+  },
+  "2024-12-29": {
+    "bloodPressure": [{ "systolic": 115, "diastolic": 61, "heartRate": 87 }],
+    "glucose": [],
+    "walk": 0,
+    "treadmill": 0,
+    "strength": 0,
+    "calories": 0,
+    "heartRate": 0
+  },
+  "2024-12-30": {
+    "bloodPressure": [
+      { "systolic": 112, "diastolic": 60, "heartRate": 77 },
+      { "systolic": 108, "diastolic": 60, "heartRate": 75 }
+    ],
+    "glucose": [{ "value": 7.7 }],
+    "walk": 0,
+    "treadmill": 0,
+    "strength": 0,
+    "calories": 0,
+    "heartRate": 0
+  },
+  "2024-12-31": {
+    "bloodPressure": [],
+    "glucose": [{ "value": 7.5 }],
+    "walk": 0,
+    "treadmill": 0,
+    "strength": 0,
+    "calories": 0,
+    "heartRate": 0
+  }
+}

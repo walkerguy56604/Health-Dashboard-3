@@ -3,10 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <title>Health Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    h1 { text-align: center; }
+    .dashboard { max-width: 900px; margin: auto; }
+    canvas { background: #f5f5f5; margin-top: 20px; }
+  </style>
 </head>
 <body>
-  <h1>Health Dashboard Test</h1>
-  <div id="output"></div>
+  <h1>Health Dashboard</h1>
+  <div class="dashboard">
+    <label for="dateSelect">Select Date:</label>
+    <select id="dateSelect"></select>
+
+    <div id="stats">
+      <p id="walk"></p>
+      <p id="strength"></p>
+      <p id="treadmill"></p>
+      <p id="calories"></p>
+      <p id="heartRate"></p>
+      <p id="bloodPressure"></p>
+      <p id="weight"></p>
+      <p id="glucose"></p>
+      <p id="sleep"></p>
+      <p id="HRV"></p>
+      <p id="mood"></p>
+    </div>
+
+    <canvas id="healthChart" width="800" height="400"></canvas>
+  </div>
 
   <script src="main.js"></script>
 </body>

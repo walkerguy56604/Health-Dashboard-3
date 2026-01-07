@@ -159,4 +159,65 @@
     "calories": 0,
     "heartRate": 0
   }
+}{
+  "2024-12-12": {
+    "bloodPressure": [{ "systolic": 108, "diastolic": 60, "heartRate": 74, "note": "IHB" }],
+    "glucose": [{ "value": 5.1 }],
+    "walk": 0,
+    "treadmill": 0,
+    "strength": 0,
+    "calories": 0,
+    "heartRate": 0
+  },
+  "2024-12-13": {
+    "bloodPressure": [
+      { "systolic": 108, "diastolic": 62, "heartRate": 84 },
+      { "systolic": 115, "diastolic": 61, "heartRate": 83 }
+    ],
+    "glucose": [],
+    "walk": 0,
+    "treadmill": 0,
+    "strength": 0,
+    "calories": 0,
+    "heartRate": 0
+  },
+  "2024-12-14": {
+    "bloodPressure": [],
+    "glucose": [{ "value": 6.4 }],
+    "walk": 0,
+    "treadmill": 0,
+    "strength": 0,
+    "calories": 0,
+    "heartRate": 0
+  },
+  "2024-12-15": {
+    "bloodPressure": [{ "systolic": 103, "diastolic": 62, "heartRate": 75 }],
+    "glucose": [],
+    "walk": 0,
+    "treadmill": 0,
+    "strength": 0,
+    "calories": 0,
+    "heartRate": 0
+  },
+  "2024-12-16": {
+    "bloodPressure": [
+      { "systolic": 111, "diastolic": 62, "heartRate": 77 },
+      { "systolic": 112, "diastolic": 59, "heartRate": 75 }
+    ],
+    "glucose": [{ "value": 6.6 }],
+    "walk": 0,
+    "treadmill": 0,
+    "strength": 0,
+    "calories": 0,
+    "heartRate": 0
+  },
+  "2024-12-18": {
+    "bloodPressure": [{ "systolic": 124, "diastolic": 75, "heartRate": 96 }],
+    "glucose": [],
+    "walk": 0,
+    "treadmill": 0,
+    "strength": 0,
+    "calories": 0,
+    "heartRate": 0
+  }
 }

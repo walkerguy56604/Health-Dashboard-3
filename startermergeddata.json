@@ -1,1 +1,23 @@
-
+{
+  "2025-01-01": {
+    "bloodPressure": [],
+    "glucose": [],
+    "walk": 0,
+    "treadmill": 0,
+    "strength": 0,
+    "calories": 0,
+    "heartRate": 0
+  },
+  "2025-01-02": {
+    "bloodPressure": [
+      { "systolic": 120, "diastolic": 65, "heartRate": 70 }
+    ],
+    "glucose": [],
+    "walk": 0,
+    "treadmill": 0,
+    "strength": 0,
+    "calories": 0,
+    "heartRate": 0
+  }
+  // Continue adding the rest of January data here
+}

@@ -4,25 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Health Dashboard</title>
+
+  <!-- Chart.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Link to your main.js -->
+  <script src="main.js" defer></script>
+
   <style>
     body { font-family: sans-serif; margin: 20px; }
     label { font-weight: bold; }
     select { margin-bottom: 15px; }
+    pre { background: #f2f2f2; padding: 10px; }
+    .category { font-weight: bold; margin-top: 10px; }
+    canvas { margin-top: 30px; max-width: 100%; }
   </style>
 </head>
 <body>
 
   <h1>Health Dashboard</h1>
 
-  <!-- Date selector -->
   <label for="datePicker">Select Date:</label>
   <select id="datePicker"></select>
 
-  <!-- Output area for daily logs -->
   <div id="dailySummaryOutput"></div>
 
-  <!-- Link to main.js which handles everything -->
-  <script type="module" src="main.js"></script>
+  <!-- Chart Canvas -->
+  <canvas id="healthChart" width="800" height="400"></canvas>
 
 </body>
 </html>

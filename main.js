@@ -1,109 +1,108 @@
+// main.js
+const dailyLogsUrl = 'dailyLogs.json';
+
+let dailyLogs = {};
+let barChart, lineChart;
+
 async function loadDailyLogs() {
   try {
-    const res = await fetch('dailyLogs.json');
-    if (!res.ok) throw new Error('Could not load daily logs');
-    const data = await res.json();
-    return data;
+    const response = await fetch(`${dailyLogsUrl}?t=${Date.now()}`); // cache-busting
+    dailyLogs = await response.json();
+    populateDateSelect();
   } catch (err) {
-    console.error(err);
-    return {};
+    console.error("Error loading daily logs:", err);
   }
 }
 
-function populateDates(dailyLogs) {
+function populateDateSelect() {
   const select = document.getElementById('dateSelect');
   select.innerHTML = '';
-  Object.keys(dailyLogs).forEach(date => {
+  Object.keys(dailyLogs).sort().forEach(date => {
     const option = document.createElement('option');
     option.value = date;
     option.textContent = date;
     select.appendChild(option);
   });
+  select.addEventListener('change', () => updateDashboard(select.value));
+  if (select.options.length > 0) updateDashboard(select.options[0].value);
 }
 
-function displayLogs(dailyLogs, date) {
-  const container = document.getElementById('logEntries');
-  container.innerHTML = '';
-  const day = dailyLogs[date];
-  if (!day) return;
+function updateDashboard(date) {
+  const data = dailyLogs[date];
+  if (!data) return;
 
-  const metrics = ['walk', 'strength', 'treadmill', 'calories', 'heartRate', 'weight', 'glucose', 'sleep', 'HRV', 'mood'];
+  // Display logs
+  const logsDiv = document.getElementById('logs');
+  logsDiv.innerHTML = `
+    <div>Walk: <span class="green">${data.walk}</span> mins</div>
+    <div>Strength: <span class="red">${data.strength}</span> mins</div>
+    <div>Treadmill: <span class="green">${data.treadmill}</span> mins</div>
+    <div>Calories: <span class="green">${data.calories}</span> kcal</div>
+    <div>Heart Rate: <span class="blue">${data.heartRate || '-'}</span></div>
+    <div>Weight: ${data.weight || '-'}</div>
+    <div>Glucose: ${data.glucose || '-'}</div>
+    <div>Sleep: ${data.sleep || '-'}</div>
+    <div>HRV: ${data.hrv || '-'}</div>
+    <div>Mood: ${data.mood || '-'}</div>
+    <div>Notes: ${data.notes.join(', ') || 'None'}</div>
+  `;
 
-  metrics.forEach(m => {
-    if (day[m] !== undefined && day[m] !== null) {
-      const div = document.createElement('div');
-      div.className = 'log-entry';
-      div.innerHTML = `<span class="metric">${m}:</span> ${day[m]} <span class="${Math.random()>.5?'up':'down'}">${Math.random()>.5?'⬆':'⬇'}</span>`;
-      container.appendChild(div);
-    }
-  });
-
-  if (day.bloodPressure && day.bloodPressure.length > 0) {
-    day.bloodPressure.forEach(bp => {
-      const div = document.createElement('div');
-      div.className = 'log-entry';
-      div.innerHTML = `<span class="metric">BP:</span> ${bp.systolic}/${bp.diastolic} HR:${bp.heartRate} Note: ${bp.note}`;
-      container.appendChild(div);
-    });
-  }
-
-  if (day.notes && day.notes.length > 0) {
-    day.notes.forEach(note => {
-      const div = document.createElement('div');
-      div.className = 'log-entry';
-      div.innerHTML = `<span class="metric">Note:</span> ${note}`;
-      container.appendChild(div);
-    });
-  }
-}
-
-function renderChart(dailyLogs, date) {
-  const day = dailyLogs[date];
-  if (!day) return;
-
-  const ctx = document.getElementById('healthChart').getContext('2d');
-
-  if (window.myChart) window.myChart.destroy();
-
-  const labels = ['Walk', 'Strength', 'Treadmill', 'Calories'];
-  const values = [day.walk || 0, day.strength || 0, day.treadmill || 0, day.calories || 0];
-
-  window.myChart = new Chart(ctx, {
+  // Bar chart for walk/strength/treadmill/calories
+  const barCtx = document.getElementById('barChart').getContext('2d');
+  if (barChart) barChart.destroy();
+  barChart = new Chart(barCtx, {
     type: 'bar',
     data: {
-      labels,
+      labels: ['Walk', 'Strength', 'Treadmill', 'Calories'],
       datasets: [{
-        label: 'Metrics',
-        data: values,
-        backgroundColor: ['green', 'red', 'blue', 'orange']
+        label: date,
+        data: [data.walk, data.strength, data.treadmill, data.calories],
+        backgroundColor: ['green', 'red', 'green', 'green']
       }]
     },
     options: {
       responsive: true,
-      plugins: {
-        legend: { display: false }
-      },
-      scales: {
-        y: { beginAtZero: true }
-      }
+      plugins: { legend: { display: false } }
     }
   });
-}
 
-async function init() {
-  const dailyLogs = await loadDailyLogs();
-  populateDates(dailyLogs);
-  const select = document.getElementById('dateSelect');
-  select.addEventListener('change', () => {
-    displayLogs(dailyLogs, select.value);
-    renderChart(dailyLogs, select.value);
+  // Line chart placeholders for trends
+  const lineCtx = document.getElementById('lineChart').getContext('2d');
+  if (lineChart) lineChart.destroy();
+  lineChart = new Chart(lineCtx, {
+    type: 'line',
+    data: {
+      labels: Object.keys(dailyLogs).sort(),
+      datasets: [
+        {
+          label: 'Walk',
+          data: Object.values(dailyLogs).map(d => d.walk),
+          borderColor: 'green',
+          fill: false
+        },
+        {
+          label: 'Strength',
+          data: Object.values(dailyLogs).map(d => d.strength),
+          borderColor: 'red',
+          fill: false
+        },
+        {
+          label: 'Treadmill',
+          data: Object.values(dailyLogs).map(d => d.treadmill),
+          borderColor: 'blue',
+          fill: false
+        },
+        {
+          label: 'Calories',
+          data: Object.values(dailyLogs).map(d => d.calories),
+          borderColor: 'orange',
+          fill: false
+        }
+      ]
+    },
+    options: { responsive: true }
   });
-
-  // Display the first date by default
-  if (select.options.length > 0) {
-    displayLogs(dailyLogs, select.value);
-    renderChart(dailyLogs, select.value);
-  }
 }
 
-init();
+// Load everything
+loadDailyLogs();

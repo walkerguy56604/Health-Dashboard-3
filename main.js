@@ -2,14 +2,13 @@
 // Config
 // =======================
 
-// Replace with your RAW GitHub JSON URL if hosted remotely
-// For local testing, keep as "./dailyLogs.json"
+// ⬇️ Make sure this points to your JSON file
 const DATA_URL = "./dailyLogs.json";
 
 let dailyLogs = {};
 
 // =======================
-// Load JSON
+// Load JSON Data
 // =======================
 async function loadData() {
   try {
@@ -17,8 +16,8 @@ async function loadData() {
     dailyLogs = await res.json();
     populateDatePicker();
   } catch (err) {
-    console.error("Failed to load data:", err);
-    document.getElementById("dailySummaryOutput").innerHTML = "<p>Failed to load data.</p>";
+    console.error("Error loading daily logs:", err);
+    document.getElementById("dailySummaryOutput").innerHTML = "<p>Failed to load data</p>";
   }
 }
 
@@ -52,42 +51,40 @@ function render(date) {
   const d = dailyLogs[date];
 
   if (!d) {
-    out.innerHTML = "<p>No data for this date.</p>";
+    out.innerHTML = "<p>No data</p>";
     return;
   }
 
-  let metrics = `
-    <div><b>Walk:</b> ${d.walk ?? "—"} min</div>
-    <div><b>Strength:</b> ${d.strength ?? "—"} min</div>
-    <div><b>Treadmill:</b> ${d.treadmill ?? "—"} min</div>
-    <div><b>Calories:</b> ${d.calories ?? "—"}</div>
-    <div><b>Heart Rate:</b> ${d.heartRate ?? "—"} BPM</div>
+  out.innerHTML = `
+    <h3>${date}</h3>
+
+    <div><b>Walk:</b> ${d.walk} min</div>
+    <div><b>Strength:</b> ${d.strength} min</div>
+    <div><b>Treadmill:</b> ${d.treadmill} min</div>
+    <div><b>Calories:</b> ${d.calories}</div>
+    <div><b>Heart Rate:</b> ${d.heartRate ?? "—"}</div>
     <div><b>Weight:</b> ${d.weight ?? "—"} kg</div>
     <div><b>Glucose:</b> ${d.glucose ?? "—"} mg/dL</div>
     <div><b>Sleep:</b> ${d.sleep ?? "—"} hrs</div>
     <div><b>HRV:</b> ${d.HRV ?? "—"}</div>
     <div><b>Mood:</b> ${d.mood ?? "—"}</div>
-  `;
 
-  let bp = `
     <h4>Blood Pressure</h4>
     ${
-      d.bloodPressure?.length
-        ? d.bloodPressure.map(bp => `${bp.systolic}/${bp.diastolic} (HR ${bp.heartRate}) – ${bp.note}`).join("<br>")
+      d.bloodPressure.length
+        ? d.bloodPressure
+            .map(bp => `${bp.systolic}/${bp.diastolic} (HR ${bp.heartRate}) – ${bp.note}`)
+            .join("<br>")
         : "No BP readings"
     }
-  `;
 
-  let notes = `
     <h4>Notes</h4>
     ${
-      d.notes?.length
+      d.notes.length
         ? d.notes.map(n => `• ${n}`).join("<br>")
         : "No notes"
     }
   `;
-
-  out.innerHTML = `<h3>${date}</h3>${metrics}${bp}${notes}`;
 }
 
 // =======================
@@ -96,6 +93,6 @@ function render(date) {
 document.getElementById("datePicker").addEventListener("change", e => render(e.target.value));
 
 // =======================
-// Initialize
+// Init
 // =======================
 loadData();

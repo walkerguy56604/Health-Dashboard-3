@@ -1,110 +1,135 @@
 // main.js
-
-// Load JSON daily logs
-async function loadDailyLogs() {
+document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const response = await fetch('dailyLogs.json');
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error loading daily logs:', error);
-    return {};
-  }
-}
+    // Load daily logs JSON
+    const response = await fetch("dailyLogs.json");
+    const dailyLogs = await response.json();
 
-// Populate the date dropdown
-function populateDates(dailyLogs) {
-  const dateSelect = document.getElementById('date-select');
-  Object.keys(dailyLogs).forEach(date => {
-    const option = document.createElement('option');
-    option.value = date;
-    option.textContent = date;
-    dateSelect.appendChild(option);
-  });
-  // Trigger update for the first date
-  if (Object.keys(dailyLogs).length > 0) {
-    updateDashboard(Object.keys(dailyLogs)[0], dailyLogs);
-  }
-}
+    // Get the date selector and display elements
+    const dateSelect = document.getElementById("dateSelect");
+    const dashboard = document.getElementById("dashboard");
+    const chartCanvas = document.getElementById("healthChart").getContext("2d");
 
-// Update the dashboard when a date is selected
-function updateDashboard(selectedDate, dailyLogs) {
-  const statsContainer = document.getElementById('daily-stats');
-  statsContainer.innerHTML = ''; // Clear previous stats
-
-  const dayData = dailyLogs[selectedDate];
-  if (!dayData) return;
-
-  // Display main stats
-  ['walk', 'strength', 'treadmill', 'calories', 'heartRate'].forEach(key => {
-    const statDiv = document.createElement('div');
-    statDiv.className = 'stat';
-    const value = dayData[key] !== null && dayData[key] !== undefined ? dayData[key] : 'N/A';
-    statDiv.textContent = `${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}`;
-    statsContainer.appendChild(statDiv);
-  });
-
-  // Display blood pressure readings
-  if (dayData.bloodPressure && dayData.bloodPressure.length > 0) {
-    dayData.bloodPressure.forEach((bp, index) => {
-      const bpDiv = document.createElement('div');
-      bpDiv.className = 'stat';
-      bpDiv.textContent = `BP ${index + 1}: ${bp.systolic}/${bp.diastolic} (HR ${bp.heartRate}) - ${bp.note || ''}`;
-      statsContainer.appendChild(bpDiv);
+    // Populate date selector
+    Object.keys(dailyLogs).forEach(date => {
+      const option = document.createElement("option");
+      option.value = date;
+      option.textContent = date;
+      dateSelect.appendChild(option);
     });
-  }
 
-  // Render chart
-  renderChart(dayData);
-}
+    // Function to display metrics
+    function displayMetrics(date) {
+      const data = dailyLogs[date];
+      if (!data) return;
 
-// Render bar chart using Chart.js
-let healthChart = null;
-function renderChart(dayData) {
-  const ctx = document.getElementById('healthChart').getContext('2d');
+      // Clear dashboard
+      dashboard.innerHTML = "";
 
-  const labels = ['Walk', 'Strength', 'Treadmill', 'Calories', 'Heart Rate'];
-  const values = [
-    dayData.walk || 0,
-    dayData.strength || 0,
-    dayData.treadmill || 0,
-    dayData.calories || 0,
-    dayData.heartRate || 0
-  ];
+      // Metrics to display
+      const metrics = [
+        { label: "Walk", value: data.walk, color: "green" },
+        { label: "Strength", value: data.strength, color: "red" },
+        { label: "Treadmill", value: data.treadmill, color: "orange" },
+        { label: "Calories", value: data.calories, color: "limegreen" },
+        { label: "Heart Rate", value: data.heartRate, color: "blue" },
+        { label: "Weight", value: data.weight, color: "purple" },
+        { label: "Glucose", value: data.glucose, color: "darkorange" },
+        { label: "Sleep", value: data.sleep, color: "teal" },
+        { label: "HRV", value: data.HRV, color: "pink" },
+        { label: "Mood", value: data.mood, color: "gold" }
+      ];
 
-  if (healthChart) healthChart.destroy(); // Destroy previous chart
+      metrics.forEach(m => {
+        const p = document.createElement("p");
+        p.textContent = `${m.label}: ${m.value !== null ? m.value : "No data"}`;
+        p.style.color = m.color;
+        dashboard.appendChild(p);
+      });
 
-  healthChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [{
-        label: 'Daily Metrics',
-        data: values,
-        backgroundColor: ['green', 'red', 'orange', 'blue', 'purple']
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false }
-      },
-      scales: {
-        y: { beginAtZero: true }
+      // Blood Pressure
+      if (data.bloodPressure && data.bloodPressure.length > 0) {
+        const bpHeader = document.createElement("p");
+        bpHeader.textContent = "Blood Pressure:";
+        bpHeader.style.fontWeight = "bold";
+        dashboard.appendChild(bpHeader);
+
+        data.bloodPressure.forEach(bp => {
+          const bpEntry = document.createElement("p");
+          bpEntry.textContent = `${bp.systolic}/${bp.diastolic} (HR ${bp.heartRate}) • ${bp.note}`;
+          dashboard.appendChild(bpEntry);
+        });
+      }
+
+      // Notes
+      if (data.notes && data.notes.length > 0) {
+        const notesHeader = document.createElement("p");
+        notesHeader.textContent = "Notes:";
+        notesHeader.style.fontWeight = "bold";
+        dashboard.appendChild(notesHeader);
+
+        data.notes.forEach(note => {
+          const noteEntry = document.createElement("p");
+          noteEntry.textContent = `- ${note}`;
+          dashboard.appendChild(noteEntry);
+        });
       }
     }
-  });
-}
 
-// Main
-async function init() {
-  const dailyLogs = await loadDailyLogs();
-  populateDates(dailyLogs);
+    // Initial display
+    const firstDate = Object.keys(dailyLogs)[0];
+    displayMetrics(firstDate);
+    dateSelect.value = firstDate;
 
-  document.getElementById('date-select').addEventListener('change', (e) => {
-    updateDashboard(e.target.value, dailyLogs);
-  });
-}
+    // Update on date change
+    dateSelect.addEventListener("change", e => displayMetrics(e.target.value));
 
-// Run
-init();
+    // Prepare chart data
+    const chartData = {
+      labels: Object.keys(dailyLogs),
+      datasets: [
+        {
+          label: "Walk",
+          data: Object.values(dailyLogs).map(d => d.walk),
+          backgroundColor: "green"
+        },
+        {
+          label: "Strength",
+          data: Object.values(dailyLogs).map(d => d.strength),
+          backgroundColor: "red"
+        },
+        {
+          label: "Treadmill",
+          data: Object.values(dailyLogs).map(d => d.treadmill),
+          backgroundColor: "orange"
+        },
+        {
+          label: "Calories",
+          data: Object.values(dailyLogs).map(d => d.calories),
+          backgroundColor: "limegreen"
+        },
+        {
+          label: "Weight",
+          data: Object.values(dailyLogs).map(d => d.weight || 0),
+          backgroundColor: "purple"
+        }
+      ]
+    };
+
+    // Render bar chart using Chart.js
+    new Chart(chartCanvas, {
+      type: "bar",
+      data: chartData,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: "top" },
+          title: { display: true, text: "Daily Metrics Overview" }
+        }
+      }
+    });
+
+  } catch (err) {
+    console.error("Error loading daily logs:", err);
+  }
+});

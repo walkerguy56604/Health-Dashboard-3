@@ -1,32 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health Dashboard</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f5f5f5; }
-        h1 { color: #333; }
-        select { padding: 5px; font-size: 16px; margin-bottom: 20px; }
-        .metrics { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 30px; }
-        .metric { background: #fff; padding: 10px 15px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); width: 140px; text-align: center; }
-        .metric span.value { font-size: 20px; font-weight: bold; display: block; margin-top: 5px; }
-        .arrow-up { color: green; font-weight: bold; }
-        .arrow-down { color: red; font-weight: bold; }
-        canvas { background: #fff; border-radius: 8px; padding: 10px; max-width: 100%; }
-    </style>
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f2f2f2;
+    }
+    h1 { text-align: center; }
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    .card {
+      background: white;
+      padding: 15px 20px;
+      margin: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      min-width: 120px;
+      text-align: center;
+    }
+    .metric {
+      font-size: 1.3em;
+      font-weight: bold;
+    }
+    .arrow-up { color: green; }
+    .arrow-down { color: red; }
+    canvas { background: white; border-radius: 8px; padding: 10px; margin-bottom: 30px; }
+  </style>
+  <!-- Include Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>Health Dashboard</h1>
-    <label for="dateSelect">Select Date:</label>
-    <select id="dateSelect"></select>
+  <h1>Health Dashboard</h1>
 
-    <div class="metrics" id="metricsContainer"></div>
+  <div>
+    <label for="selectDate">Select Date:</label>
+    <select id="selectDate"></select>
+  </div>
 
-    <canvas id="healthChart" height="150"></canvas>
+  <div class="card-container" id="cards"></div>
 
-    <script src="main.js"></script>
+  <!-- Line chart for trends -->
+  <canvas id="trendChart" height="200"></canvas>
+
+  <!-- Bar chart for daily metrics -->
+  <canvas id="barChart" height="150"></canvas>
+
+  <!-- Main JS -->
+  <script src="main.js"></script>
 </body>
 </html>

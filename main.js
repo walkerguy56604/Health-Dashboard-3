@@ -1,4 +1,4 @@
-// Main JS for Health Dashboard
+// Main JS for Health Dashboard with Trends
 (async function() {
   const dailyLogsUrl = `dailyLogs.json?v=${Date.now()}`; // Cache-busting
 
@@ -13,10 +13,21 @@
 
   const dateSelect = document.getElementById("dateSelect");
   const metricsCard = document.getElementById("metricsCard");
-  const ctx = document.getElementById("healthChart").getContext("2d");
+  const ctxBar = document.getElementById("healthChart").getContext("2d");
 
-  // Populate dates in dropdown
-  const dates = Object.keys(dailyLogs).sort((a,b)=> new Date(b) - new Date(a));
+  // Add a new canvas for trends
+  let trendsCanvas = document.getElementById("trendsChart");
+  if(!trendsCanvas) {
+    trendsCanvas = document.createElement("canvas");
+    trendsCanvas.id = "trendsChart";
+    document.querySelector(".dashboard").appendChild(trendsCanvas);
+  }
+  const ctxLine = trendsCanvas.getContext("2d");
+
+  // Sort dates descending
+  const dates = Object.keys(dailyLogs).sort((a,b)=> new Date(a) - new Date(b));
+
+  // Populate dropdown
   dates.forEach(date => {
     const option = document.createElement("option");
     option.value = date;
@@ -50,7 +61,6 @@
       }
     });
 
-    // Blood pressure
     if(day.bloodPressure && day.bloodPressure.length) {
       day.bloodPressure.forEach(bp => {
         const div = document.createElement("div");
@@ -60,7 +70,6 @@
       });
     }
 
-    // Notes
     if(day.notes && day.notes.length) {
       day.notes.forEach(note => {
         const div = document.createElement("div");
@@ -71,9 +80,8 @@
     }
   }
 
-  function renderChart(date) {
+  function renderBarChart(date) {
     const day = dailyLogs[date];
-
     const labels = ["Walk", "Strength", "Treadmill", "Calories", "Heart Rate", "Weight", "Glucose", "Sleep", "HRV"];
     const data = [
       day.walk || 0,
@@ -89,7 +97,7 @@
 
     if(window.healthChartInstance) window.healthChartInstance.destroy();
 
-    window.healthChartInstance = new Chart(ctx, {
+    window.healthChartInstance = new Chart(ctxBar, {
       type: 'bar',
       data: {
         labels,
@@ -103,26 +111,41 @@
           })
         }]
       },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { display: false }
-        },
-        scales: {
-          y: { beginAtZero: true }
-        }
-      }
+      options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+    });
+  }
+
+  function renderLineChart() {
+    const labels = dates;
+    const metricsKeys = ["walk", "strength", "treadmill", "calories", "heartRate", "weight", "glucose", "sleep", "HRV"];
+    const colors = { walk: "green", treadmill: "green", calories: "green", strength: "red", heartRate: "blue", weight: "blue", glucose: "blue", sleep: "blue", HRV: "blue" };
+
+    const datasets = metricsKeys.map(key => ({
+      label: key,
+      data: dates.map(d => dailyLogs[d][key] || 0),
+      borderColor: colors[key] || "black",
+      fill: false,
+      tension: 0.2
+    }));
+
+    if(window.trendsChartInstance) window.trendsChartInstance.destroy();
+
+    window.trendsChartInstance = new Chart(ctxLine, {
+      type: "line",
+      data: { labels, datasets },
+      options: { responsive: true, plugins: { legend: { position: "bottom" } }, scales: { y: { beginAtZero: true } } }
     });
   }
 
   // Initialize
-  const defaultDate = dates[0];
-  renderMetrics(defaultDate);
-  renderChart(defaultDate);
-
+  const defaultDate = dates[dates.length - 1];
   dateSelect.value = defaultDate;
+  renderMetrics(defaultDate);
+  renderBarChart(defaultDate);
+  renderLineChart();
+
   dateSelect.addEventListener("change", e => {
     renderMetrics(e.target.value);
-    renderChart(e.target.value);
+    renderBarChart(e.target.value);
   });
 })();

@@ -2,13 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Health Dashboard</title>
+  <!-- Chart.js for charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Optional styling -->
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { text-align: center; }
+    .chart-container { width: 100%; max-width: 800px; margin: 30px auto; }
+    #daily-stats { margin-top: 20px; }
+    .stat { margin-bottom: 10px; }
+  </style>
 </head>
 <body>
   <h1>Health Dashboard</h1>
-  <div id="dashboard"></div>
 
-  <!-- This runs main.js -->
+  <!-- Dropdown to select date -->
+  <label for="date-select">Select Date:</label>
+  <select id="date-select"></select>
+
+  <!-- Chart container -->
+  <div class="chart-container">
+    <canvas id="healthChart"></canvas>
+  </div>
+
+  <!-- Daily stats container -->
+  <div id="daily-stats"></div>
+
+  <!-- Link to your main.js -->
   <script src="main.js"></script>
 </body>
 </html>

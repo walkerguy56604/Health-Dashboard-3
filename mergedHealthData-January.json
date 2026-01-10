@@ -1,1 +1,10 @@
-
+{
+  "date": "",
+  "morning_log": [],
+  "midday_log": [],
+  "evening_log": [],
+  "blood_pressure": [],
+  "glucose": [],
+  "steps": [],
+  "meals": []
+}

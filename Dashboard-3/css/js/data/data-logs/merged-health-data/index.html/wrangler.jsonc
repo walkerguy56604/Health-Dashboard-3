@@ -1,1 +1,5 @@
-
+{
+  "name": "health-dashboard-3",
+  "main": "js/dashboard.js",
+  "data_dir": "data/merged-health-data"
+}
